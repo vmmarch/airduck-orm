@@ -33,7 +33,7 @@ public class SqlSessionQueryTest {
         var sqlSession = new AbstractSqlSession(new Configuration(createDataSource()));
         sqlSession.openSqlSession(false);
 
-        int ret = sqlSession.update("insert into next_val(id, username, nickname) values(?, ?, ?) ",
+        int ret = sqlSession.update("insert into nextval(id, username, nickname) values(?, ?, ?) ",
                 3213, "brouck", "不肉克");
         System.out.println("Update result: " + ret);
 
