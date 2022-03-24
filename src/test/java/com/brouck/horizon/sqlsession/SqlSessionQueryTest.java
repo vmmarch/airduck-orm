@@ -1,9 +1,11 @@
-package com.brouck.horizon;
+package com.brouck.horizon.sqlsession;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.brouck.horizon.model.NextVal;
+import com.brouck.horizon.AbstractSqlSession;
+import com.brouck.horizon.Configuration;
+import com.brouck.horizon.sqlsession.model.NextVal;
 import org.junit.Test;
 
 import javax.sql.DataSource;
@@ -12,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author lts
+ * @author brouck
  * Create time 2022/3/23
  */
 public class SqlSessionQueryTest {

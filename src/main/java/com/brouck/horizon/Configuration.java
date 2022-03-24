@@ -15,7 +15,7 @@ public class Configuration {
     /**
      * 数据源
      */
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     /**
      * 是否关闭自动提交

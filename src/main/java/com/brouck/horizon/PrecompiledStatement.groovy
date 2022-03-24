@@ -8,7 +8,7 @@ import java.sql.PreparedStatement
 /**
  * 预编译SQL声明
  *
- * @author lts
+ * @author brouck
  * Create time 2022/3/23
  */
 class PrecompiledStatement {

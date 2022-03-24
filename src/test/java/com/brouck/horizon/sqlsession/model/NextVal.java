@@ -1,7 +1,7 @@
-package com.brouck.horizon.model;
+package com.brouck.horizon.sqlsession.model;
 
 /**
- * @author lts
+ * @author brouck
  * Create time 2022/3/23
  */
 public class NextVal {

@@ -7,7 +7,7 @@ import com.brouck.horizon.exception.MultipleResultSetsException
 import java.sql.ResultSet
 
 /**
- * @author lts
+ * @author brouck
  * Create time 2022/3/23
  */
 class ExecuteQuerySet {
