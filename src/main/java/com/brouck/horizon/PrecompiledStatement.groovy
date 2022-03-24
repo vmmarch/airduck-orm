@@ -1,6 +1,6 @@
 package com.brouck.horizon
 
-import com.brouck.horizon.tools.CloseUtils
+import com.brouck.horizon.tools.ActionUtils
 
 import java.sql.Connection
 import java.sql.PreparedStatement
@@ -44,7 +44,7 @@ class PrecompiledStatement {
      * 关闭SQL声明
      */
     void close() {
-        CloseUtils::close(preparedStatement)
+        ActionUtils::close(preparedStatement)
     }
 
     /**

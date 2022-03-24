@@ -24,7 +24,7 @@ public class AbstractSqlSession implements SqlSession {
     public void openSqlSession(boolean openTransaction) {
         try {
             checkConnectionOpened();
-            this.currentConnection = configuration.openQueryConnection();
+            this.currentConnection = configuration.openConnection(openTransaction);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -32,12 +32,8 @@ public class AbstractSqlSession implements SqlSession {
 
     @Override
     public void closeSqlSession() {
-        try {
-            configuration.closeQueryConnection(this.currentConnection);
-            this.currentConnection = null;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        configuration.closeConnection(this.currentConnection);
+        this.currentConnection = null;
     }
 
     /** 校验SqlSession是否重复开启 */

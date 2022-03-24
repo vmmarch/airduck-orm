@@ -31,7 +31,7 @@ public class SqlSessionQueryTest {
     @Test
     public void sqlSessionUpdate() throws Exception {
         var sqlSession = new AbstractSqlSession(new Configuration(createDataSource()));
-        sqlSession.openSqlSession(false);
+        sqlSession.openSqlSession(true);
 
         int ret = sqlSession.update("insert into nextval(id, username, nickname) values(?, ?, ?) ",
                 3213, "brouck", "不肉克");
@@ -48,8 +48,8 @@ public class SqlSessionQueryTest {
         int[] ret = sqlSession.updateBatch("insert into next_val(id, username, nickname) values(?, ?, ?); ",
                 List.of(new Object[]{1, "brouck-horizon-0", "地平线-1"},
                         new Object[]{2, "brouck-horizon-1", "地平线-2"},
-                        new Object[]{3, "brouck-horizon-2", "地平线-3"},
-                        new Object[]{4, "brouck-horizon-3", "地平线-4"}));
+                        new Object[]{"3v", "brouck-horizon-2", "地平线-3"},
+                        new Object[]{"4v", "brouck-horizon-3", "地平线-4"}));
 
         System.out.println("Update result: " + JSON.toJSONString(ret));
 
