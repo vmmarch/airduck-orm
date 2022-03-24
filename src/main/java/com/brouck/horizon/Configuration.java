@@ -13,14 +13,14 @@ public record Configuration(DataSource dataSource) {
     /**
      * 打开数据库链接
      */
-    public Connection openConnection() throws SQLException {
+    public Connection openQueryConnection() throws SQLException {
         return dataSource.getConnection();
     }
 
     /**
      * 关闭数据库链接
      */
-    public void closeConnection(Connection connection) throws SQLException {
+    public void closeQueryConnection(Connection connection) throws SQLException {
         connection.close();
     }
 

@@ -1,5 +1,9 @@
 package com.brouck.horizon
 
+import com.alibaba.fastjson.JSONArray
+import com.alibaba.fastjson.JSONObject
+import com.brouck.horizon.exception.MultipleResultSetsException
+
 import java.sql.ResultSet
 
 /**
@@ -44,8 +48,11 @@ class ExecuteQuerySet {
      *
      * @param _class 被转换的对象
      */
-    public <T> T asObject(Class<?> _class) {
-        return null
+    public <T> T asObject(Class<T> _class) {
+        if (resultData.size() > 1)
+            throw new MultipleResultSetsException("查询到了多个结果集，一共查询到了${resultData.size()}条数据。但预期结果只有一条。")
+
+        return new JSONObject(resultData[0]).toJavaObject(_class) as T
     }
 
     /**
@@ -53,8 +60,8 @@ class ExecuteQuerySet {
      *
      * @param _class 被转换的对象
      */
-    public <T> List<T> asList(Class<?> _class) {
-        return null
+    public <T> List<T> asList(Class<T> _class) {
+        return new JSONArray(resultData).toJavaList(_class) as List<T>
     }
 
 }

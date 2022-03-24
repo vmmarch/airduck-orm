@@ -1,5 +1,6 @@
 package com.brouck.horizon;
 
+import com.brouck.horizon.exception.ConnectionOpenedException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -20,14 +21,10 @@ public class AbstractSqlSession implements SqlSession {
     }
 
     @Override
-    public void setConnectionContext(Connection connection) {
-        this.currentConnection = connection;
-    }
-
-    @Override
-    public void openSqlSession() {
+    public void openSqlSession(boolean openTransaction) {
         try {
-            this.currentConnection = configuration.openConnection();
+            checkConnectionOpened();
+            this.currentConnection = configuration.openQueryConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -36,52 +33,54 @@ public class AbstractSqlSession implements SqlSession {
     @Override
     public void closeSqlSession() {
         try {
-            configuration.closeConnection(this.currentConnection);
+            configuration.closeQueryConnection(this.currentConnection);
+            this.currentConnection = null;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    /** 校验SqlSession是否重复开启 */
+    private void checkConnectionOpened() {
+        if (this.currentConnection != null)
+            throw new ConnectionOpenedException("在当前SqlSession上下文中已经打开了一个SqlSession，请等待上一个SqlSession的关闭。");
     }
 
     @Override
     public <T> T queryForObject(String sql, Class<T> _class, Object... args) {
         PrecompiledStatement statement = new PrecompiledStatement(sql, args, this.currentConnection);
         ExecuteQuerySet executeQuerySet = statement.executeQuery();
+        statement.close();
+
         return executeQuerySet.asObject(_class);
     }
 
     @Override
     public <T> List<T> queryForList(String sql, Class<T> _class, Object... args) {
-        return null;
+        PrecompiledStatement statement = new PrecompiledStatement(sql, args, this.currentConnection);
+        ExecuteQuerySet executeQuerySet = statement.executeQuery();
+        statement.close();
+
+        return executeQuerySet.asList(_class);
     }
 
     @Override
-    public int update(Object updateObject, String whereSql) {
-        return 0;
+    public int update(String sql, Object... args) {
+        PrecompiledStatement statement = new PrecompiledStatement(sql, args, this.currentConnection);
+        int ret = statement.executeUpdate();
+        statement.close();
+
+        return ret;
     }
 
     @Override
-    public int updateBatch(List<Object> updateObjects, String whereSql) {
-        return 0;
-    }
+    public int[] updateBatch(String sql, List<Object[]> args) {
+        PrecompiledStatement statement = new PrecompiledStatement(sql, this.currentConnection);
+        statement.setBatchArgv(args);
+        int[] ret = statement.executeBatch();
+        statement.close();
 
-    @Override
-    public int updateByPrimaryKey(Object updateObject) {
-        return 0;
-    }
-
-    @Override
-    public int updateBatchByPrimaryKey(List<Object> updateObjects) {
-        return 0;
-    }
-
-    @Override
-    public boolean save(Object saveObject) {
-        return false;
-    }
-
-    @Override
-    public boolean saveBatch(Object saveObjects) {
-        return false;
+        return ret;
     }
 
 }
