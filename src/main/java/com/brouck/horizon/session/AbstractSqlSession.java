@@ -1,4 +1,4 @@
-package com.brouck.horizon;
+package com.brouck.horizon.session;
 
 import com.brouck.horizon.exception.ConnectionOpenedException;
 import java.sql.Connection;

@@ -1,11 +1,9 @@
-package com.brouck.horizon.sqlsession;
+package com.brouck.horizon.session;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.brouck.horizon.AbstractSqlSession;
-import com.brouck.horizon.Configuration;
-import com.brouck.horizon.sqlsession.model.NextVal;
+import com.brouck.horizon.session.model.NextVal;
 import org.junit.Test;
 
 import javax.sql.DataSource;

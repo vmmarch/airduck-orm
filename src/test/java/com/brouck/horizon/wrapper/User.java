@@ -1,5 +1,6 @@
-package com.brouck.horizon.annotation;
+package com.brouck.horizon.wrapper;
 
+import com.brouck.horizon.annotation.*;
 import com.brouck.horizon.generator.id.IdGeneratorForSnowflake;
 
 /**

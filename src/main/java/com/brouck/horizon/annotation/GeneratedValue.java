@@ -1,7 +1,6 @@
 package com.brouck.horizon.annotation;
 
 import com.brouck.horizon.generator.id.IdGeneratorForIncrement;
-import com.brouck.horizon.generator.id.IdGeneratorForSequence;
 
 import java.lang.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.brouck.horizon.sqlsession.model;
+package com.brouck.horizon.session.model;
 
 /**
  * @author brouck

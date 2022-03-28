@@ -1,4 +1,4 @@
-package com.brouck.horizon;
+package com.brouck.horizon.session;
 
 import java.sql.Connection;
 import java.util.List;
