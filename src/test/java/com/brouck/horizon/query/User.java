@@ -1,6 +1,5 @@
-package com.brouck.horizon.wrapper;
+package com.brouck.horizon.query;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.brouck.horizon.annotation.*;
 import com.brouck.horizon.generator.id.IdGeneratorForSnowflake;
 import lombok.Data;
@@ -10,15 +9,16 @@ import lombok.Data;
  * Create time 2022/3/24
  */
 @Data
-@TableRemarks("用户表")
+@TableComment("用户表")
 @Table(name = "user")
 public class User {
 
     @Id
+    @Column
     @GeneratedValue(generator = IdGeneratorForSnowflake.class)
     private String id;
 
-    @ColumnRemarks("用户名")
+    @ColumnComment("用户名")
     @Column(nullable = false)
     private String username;
 
@@ -28,7 +28,7 @@ public class User {
     @Column(length = 528, nullable = false)
     private String comment;
 
-    @Column(map = false)
+    @Column(unmap = true)
     private Integer queryCount;
 
 }

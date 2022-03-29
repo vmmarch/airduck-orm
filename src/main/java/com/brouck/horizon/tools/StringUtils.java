@@ -31,9 +31,7 @@ import java.util.regex.Pattern;
 
 /**
  * String工具类
- *
  * @author lts
- * @email jiakesiws@gmail.com
  */
 public
 class StringUtils {
@@ -63,8 +61,8 @@ class StringUtils {
   public static boolean isEmpty(final CharSequence input) {
     return input == null
             || input.length() == 0
-            || UNICODE_U0000.equals(input)
-            || UNICODE_U3000.equals(input);
+            || UNICODE_U0000.contentEquals(input)
+            || UNICODE_U3000.contentEquals(input);
   }
 
   /**
@@ -196,26 +194,11 @@ class StringUtils {
     return def;
   }
 
-  public static int asInt(Object input) {
-    return asInt(input, 0);
+  public static Integer asInt(Object input) {
+    return asInt(input, null);
   }
 
-  public static int asInt(Object input, int def) {
-    try {
-      if (input != null) {
-        String strValue = asString(input);
-        return Integer.parseInt(strValue);
-      }
-    } catch (Exception ignored) {
-    }
-    return def;
-  }
-
-  public static Integer asInt0(Object input) {
-    return asInt0(input, null);
-  }
-
-  public static Integer asInt0(Object input, Integer def) {
+  public static Integer asInt(Object input, Integer def) {
     try {
       if (input != null) {
         String strValue = asString(input);
@@ -226,26 +209,11 @@ class StringUtils {
     return def;
   }
 
-  public static long asLong(Object input) {
-    return asLong(input, 0L);
+  public static Long asLong(Object input) {
+    return asLong(input, null);
   }
 
-  public static long asLong(Object input, long def) {
-    try {
-      if (input != null) {
-        String strValue = asString(input);
-        return Long.parseLong(strValue);
-      }
-    } catch (Exception ignored) {
-    }
-    return def;
-  }
-
-  public static Long asLong0(Object input) {
-    return asLong0(input, null);
-  }
-
-  public static Long asLong0(Object input, Long def) {
+  public static Long asLong(Object input, Long def) {
     try {
       if (input != null) {
         String strValue = asString(input);
@@ -256,26 +224,11 @@ class StringUtils {
     return def;
   }
 
-  public static float asFloat(Object input) {
-    return asFloat(input, 0);
+  public static Float asFloat(Object input) {
+    return asFloat(input, null);
   }
 
-  public static float asFloat(Object input, float def) {
-    try {
-      if (input != null) {
-        String strValue = asString(input);
-        return Float.parseFloat(strValue);
-      }
-    } catch (Exception ignored) {
-    }
-    return def;
-  }
-
-  public static Float asFloat0(Object input) {
-    return asFloat0(input, null);
-  }
-
-  public static Float asFloat0(Object input, Float def) {
+  public static Float asFloat(Object input, Float def) {
     try {
       if (input != null) {
         String strValue = asString(input);
@@ -286,26 +239,11 @@ class StringUtils {
     return def;
   }
 
-  public static double asDouble(Object input) {
-    return asDouble(input, 0);
+  public static Double asDouble(Object input) {
+    return asDouble(input, null);
   }
 
-  public static double asDouble(Object input, double def) {
-    try {
-      if (input != null) {
-        String strValue = asString(input);
-        return Double.parseDouble(strValue);
-      }
-    } catch (Exception ignored) {
-    }
-    return def;
-  }
-
-  public static Double asDouble0(Object input) {
-    return asDouble0(input, null);
-  }
-
-  public static Double asDouble0(Object input, Double def) {
+  public static Double asDouble(Object input, Double def) {
     try {
       if (input != null) {
         String strValue = asString(input);
@@ -316,26 +254,11 @@ class StringUtils {
     return def;
   }
 
-  public static boolean asBoolean(Object input) {
-    return asBoolean(input, false);
+  public static Boolean asBoolean(Object input) {
+    return asBoolean(input, null);
   }
 
-  public static boolean asBoolean(Object input, boolean def) {
-    try {
-      if (input != null) {
-        String strValue = asString(input);
-        return Boolean.parseBoolean(strValue);
-      }
-    } catch (Exception ignored) {
-    }
-    return def;
-  }
-
-  public static Boolean asBoolean0(Object input) {
-    return asBoolean0(input, null);
-  }
-
-  public static Boolean asBoolean0(Object input, Boolean def) {
+  public static Boolean asBoolean(Object input, Boolean def) {
     try {
       if (input != null) {
         String strValue = asString(input);
@@ -432,7 +355,7 @@ class StringUtils {
    */
   public static String toUpperCase(String input, int index) {
     StringBuilder builder = new StringBuilder(input);
-    String value = new String(new char[]{input.charAt(index - 1)}).toUpperCase();
+    String value = String.valueOf(input.charAt(index - 1)).toUpperCase();
     builder.replace(0, 1, value);
     return builder.toString();
   }
@@ -449,7 +372,7 @@ class StringUtils {
    */
   public static String toLowerCase(String input, int index) {
     StringBuilder builder = new StringBuilder(input);
-    String value = new String(new char[]{input.charAt(index - 1)}).toLowerCase();
+    String value = String.valueOf(input.charAt(index - 1)).toLowerCase();
     builder.replace(0, 1, value);
     return builder.toString();
   }

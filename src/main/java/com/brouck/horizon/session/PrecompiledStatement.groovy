@@ -1,6 +1,8 @@
 package com.brouck.horizon.session
 
 import com.brouck.horizon.tools.ActionUtils
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 import java.sql.Connection
 import java.sql.PreparedStatement
@@ -12,6 +14,8 @@ import java.sql.PreparedStatement
  * Create time 2022/3/23
  */
 class PrecompiledStatement {
+
+    private static final Logger log = LoggerFactory.getLogger(AbstractSqlSession.class);
 
     /**
      * 预编译sql声明
@@ -25,6 +29,9 @@ class PrecompiledStatement {
      * @param connection    数据库链接
      */
     PrecompiledStatement(String sql, Connection connection) {
+        if (log.isDebugEnabled())
+            log.debug("执行SQL: {}", sql)
+
         preparedStatement = connection.prepareStatement(sql)
     }
 

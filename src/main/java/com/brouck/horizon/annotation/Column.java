@@ -27,6 +27,6 @@ public @interface Column {
     /**
      * 设置当前字段不与表映射
      */
-    boolean map() default true;
+    boolean unmap() default false;
 
 }

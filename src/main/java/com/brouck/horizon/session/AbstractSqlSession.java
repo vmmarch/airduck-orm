@@ -1,6 +1,10 @@
 package com.brouck.horizon.session;
 
 import com.brouck.horizon.exception.ConnectionOpenedException;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
