@@ -14,11 +14,6 @@ import java.lang.annotation.*;
 public @interface Column {
 
     /**
-     * 字段名, 如果没指定的话默认为成员名转驼峰。
-     */
-    String name() default "";
-
-    /**
      * varchar类型默认长度为255，
      * int类型默认长度为1
      */

@@ -43,7 +43,7 @@ public class AbstractSqlSession implements SqlSession {
     }
 
     @Override
-    public <T> T queryForObject(String sql, Class<T> _class, Object... args) {
+    public <T> T executeQuery(String sql, Class<T> _class, Object... args) {
         PrecompiledStatement statement = new PrecompiledStatement(sql, args, this.currentConnection);
         ExecuteQuerySet executeQuerySet = statement.executeQuery();
         statement.close();
@@ -52,7 +52,7 @@ public class AbstractSqlSession implements SqlSession {
     }
 
     @Override
-    public <T> List<T> queryForList(String sql, Class<T> _class, Object... args) {
+    public <T> List<T> executeQueryArray(String sql, Class<T> _class, Object... args) {
         PrecompiledStatement statement = new PrecompiledStatement(sql, args, this.currentConnection);
         ExecuteQuerySet executeQuerySet = statement.executeQuery();
         statement.close();
@@ -61,7 +61,7 @@ public class AbstractSqlSession implements SqlSession {
     }
 
     @Override
-    public int update(String sql, Object... args) {
+    public int executeUpdate(String sql, Object... args) {
         PrecompiledStatement statement = new PrecompiledStatement(sql, args, this.currentConnection);
         int ret = statement.executeUpdate();
         statement.close();
@@ -70,7 +70,7 @@ public class AbstractSqlSession implements SqlSession {
     }
 
     @Override
-    public int[] updateBatch(String sql, List<Object[]> args) {
+    public int[] executeUpdateBatch(String sql, List<Object[]> args) {
         PrecompiledStatement statement = new PrecompiledStatement(sql, this.currentConnection);
         statement.setBatchArgv(args);
         int[] ret = statement.executeBatch();

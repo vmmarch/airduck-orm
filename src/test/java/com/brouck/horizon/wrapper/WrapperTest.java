@@ -1,6 +1,8 @@
 package com.brouck.horizon.wrapper;
 
-import com.brouck.horizon.generator.wrapper.QueryWrapper;
+import com.alibaba.fastjson.JSON;
+import com.brouck.horizon.generator.wrapper.Query;
+import com.brouck.horizon.session.GetSQLSession;
 import com.brouck.horizon.session.HorizonSession;
 import org.junit.Test;
 
@@ -10,15 +12,13 @@ import org.junit.Test;
  */
 public class WrapperTest {
 
-    HorizonSession horizonSession;
-
     @Test
     public void searchWrapperTest() {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username", "张三");
-        queryWrapper.gt("age", 18);
+        HorizonSession horizonSession = new HorizonSession(GetSQLSession.getSqlSession());
+        Query<User> query = horizonSession.createQuery(User.class);
+        query.in("id", 2, 3);
 
-        User user = horizonSession.queryForObject(queryWrapper);
+        System.out.println(JSON.toJSONString(query.list()));
     }
 
 }

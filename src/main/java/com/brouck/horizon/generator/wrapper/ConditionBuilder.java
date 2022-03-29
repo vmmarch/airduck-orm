@@ -1,5 +1,7 @@
 package com.brouck.horizon.generator.wrapper;
 
+import com.brouck.horizon.tools.StringUtils;
+
 import java.util.*;
 
 /**
@@ -34,6 +36,14 @@ public class ConditionBuilder<Children extends ConditionBuilder<Children>> {
         _condition.put("like", new HashMap<>());
         _condition.put("leftLike", new HashMap<>());
         _condition.put("rightLike", new HashMap<>());
+        _condition.put("in", new HashMap<>());
+    }
+
+    /**
+     * 获取所有参数
+     */
+    protected List<Object> getParameters() {
+        return _parameters;
     }
 
     /**
@@ -126,6 +136,10 @@ public class ConditionBuilder<Children extends ConditionBuilder<Children>> {
         return putCondition("rightLike", name, value);
     }
 
+    public Children in(String name, Object... args) {
+        return putCondition("in", name, args);
+    }
+
     /**
      * 存放查询或者更新条件内容
      *
@@ -205,6 +219,22 @@ public class ConditionBuilder<Children extends ConditionBuilder<Children>> {
                     _parameters.add(val);
                 });
             }
+
+            if (condition.equals("in")) {
+                attribute.forEach((key, val) -> {
+                    _where.append(" and ").append(key).append(" in ( ");
+
+                    Object[] args = (Object[]) val;
+                    for (Object arg : args) {
+                        _where.append("?,");
+                        _parameters.add(arg);
+                    }
+
+                    _where.deleteCharAt(_where.length() - 1);
+                    _where.append(")");
+                });
+            }
+
         });
     }
 
@@ -212,6 +242,7 @@ public class ConditionBuilder<Children extends ConditionBuilder<Children>> {
      * @return 构建好的Where SQL
      */
     protected String getWhereSQL() {
+        buildWhere();
         return _where.toString();
     }
 

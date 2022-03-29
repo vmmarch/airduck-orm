@@ -1,8 +1,8 @@
 package com.brouck.horizon.session;
 
-import com.brouck.horizon.generator.wrapper.Wrapper;
-
-import java.util.List;
+import com.brouck.horizon.annotation.Table;
+import com.brouck.horizon.exception.IllegalTableClassException;
+import com.brouck.horizon.generator.wrapper.Query;
 
 /**
  * horizon sql session封装类
@@ -17,18 +17,19 @@ public class HorizonSession {
      */
     private SqlSession _sqlSession;
 
-    /**
-     * 查询单个对象
-     */
-    public <Entity> Entity queryForObject(Wrapper<Entity> wrapper) {
-        return null;
+    public HorizonSession(SqlSession sqlSession) {
+        this._sqlSession = sqlSession;
     }
 
     /**
-     * 查询单个对象
+     * 创建查询对象
      */
-    public <Entity> List<Entity> queryForList(Wrapper<Entity> wrapper) {
-        return null;
+    public <T> Query<T> createQuery(Class<T> _class) {
+        if (!_class.isAnnotationPresent(Table.class)) {
+            throw new IllegalTableClassException("创建查询失败，实体类必须存在@Table注解。");
+        }
+
+        return new Query<>(_sqlSession, _class);
     }
 
 }

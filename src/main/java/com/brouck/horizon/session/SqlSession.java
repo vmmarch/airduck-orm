@@ -29,7 +29,7 @@ public interface SqlSession
      * @param _class    类对象
      * @param args      查询参数
      */
-    <T> T queryForObject(String sql, Class<T> _class, Object... args);
+    <T> T executeQuery(String sql, Class<T> _class, Object... args);
 
     /**
      * 查询集合列表
@@ -38,7 +38,7 @@ public interface SqlSession
      * @param _class    类对象
      * @param args      查询参数
      */
-    <T> List<T> queryForList(String sql, Class<T> _class, Object... args);
+    <T> List<T> executeQueryArray(String sql, Class<T> _class, Object... args);
 
     /**
      * 更新一条数据
@@ -47,7 +47,7 @@ public interface SqlSession
      * @param args      参数列表
      * @return          结果大于1表示更新成功
      */
-    int update(String sql, Object... args);
+    int executeUpdate(String sql, Object... args);
 
     /**
      * 批量更新
@@ -56,6 +56,6 @@ public interface SqlSession
      * @param args      参数列表
      * @return          结果大于1表示更新成功
      */
-    int[] updateBatch(String sql, List<Object[]> args);
+    int[] executeUpdateBatch(String sql, List<Object[]> args);
 
 }

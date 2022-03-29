@@ -22,7 +22,7 @@ public class SqlSessionQueryTest {
         var sqlSession = new AbstractSqlSession(new Configuration(createDataSource()));
         sqlSession.openSqlSession(false);
 
-        var nextValue = sqlSession.queryForObject("select * from next_val where id = ?", NextVal.class, 3213);
+        var nextValue = sqlSession.executeQuery("select * from next_val where id = ?", NextVal.class, 3213);
         System.out.println(JSONObject.toJSONString(nextValue));
 
         sqlSession.closeSqlSession();
@@ -33,7 +33,7 @@ public class SqlSessionQueryTest {
         var sqlSession = new AbstractSqlSession(new Configuration(createDataSource()));
         sqlSession.openSqlSession(true);
 
-        int ret = sqlSession.update("insert into nextval(id, username, nickname) values(?, ?, ?) ",
+        int ret = sqlSession.executeUpdate("insert into nextval(id, username, nickname) values(?, ?, ?) ",
                 3213, "brouck", "不肉克");
         System.out.println("Update result: " + ret);
 
@@ -45,7 +45,7 @@ public class SqlSessionQueryTest {
         var sqlSession = new AbstractSqlSession(new Configuration(createDataSource()));
         sqlSession.openSqlSession(true);
 
-        int ret = sqlSession.update("delete from next_val where id = ?", 1);
+        int ret = sqlSession.executeUpdate("delete from next_val where id = ?", 1);
         System.out.println("Update result: " + ret);
 
         sqlSession.closeSqlSession();
@@ -56,7 +56,7 @@ public class SqlSessionQueryTest {
         var sqlSession = new AbstractSqlSession(new Configuration(createDataSource()));
         sqlSession.openSqlSession(true);
 
-        int[] ret = sqlSession.updateBatch("insert into next_val(id, username, nickname) values(?, ?, ?); ",
+        int[] ret = sqlSession.executeUpdateBatch("insert into next_val(id, username, nickname) values(?, ?, ?); ",
                 List.of(new Object[]{1, "brouck-horizon-0", "地平线-1"},
                         new Object[]{2, "brouck-horizon-1", "地平线-2"},
                         new Object[]{3, "brouck-horizon-2", "地平线-3"},
@@ -65,6 +65,16 @@ public class SqlSessionQueryTest {
         System.out.println("Update result: " + JSON.toJSONString(ret));
 
         sqlSession.closeSqlSession();
+    }
+
+    public  static SqlSession getSqlSession() {
+        try {
+            return new AbstractSqlSession(new Configuration(createDataSource()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public static DataSource createDataSource() throws Exception {
