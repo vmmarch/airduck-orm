@@ -1,6 +1,6 @@
 package com.brouck.horizon.session.metadata
 
-import com.brouck.horizon.generator.table.InColumn
+
 import com.brouck.horizon.session.HorizonSession
 import lombok.Data
 
@@ -36,12 +36,12 @@ class MySQLMetaDataQuery implements MetaDataQuery {
     }
 
     @Override
-    List<InColumn> columns(String table) {
+    List<ColumnMetaData> columns(String table) {
         return horizonSession.listQuery(
                 """
                         select * from information_schema.columns 
                         where table_schema='${database()}' and table_name='${table}';
-                    """, InColumn.class)
+                """, ColumnMetaData.class)
     }
 
 }

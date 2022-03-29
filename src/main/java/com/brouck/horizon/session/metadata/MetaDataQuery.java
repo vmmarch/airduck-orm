@@ -1,7 +1,5 @@
 package com.brouck.horizon.session.metadata;
 
-import com.brouck.horizon.generator.table.InColumn;
-
 import java.util.List;
 
 /**
@@ -18,6 +16,6 @@ public interface MetaDataQuery {
     /**
      * 查询表的所有字段数据
      */
-    List<InColumn> columns(String table);
+    List<ColumnMetaData> columns(String table);
 
 }
