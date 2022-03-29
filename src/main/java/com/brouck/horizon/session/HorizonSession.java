@@ -1,11 +1,13 @@
 package com.brouck.horizon.session;
 
+import com.alibaba.fastjson.JSONObject;
 import com.brouck.horizon.annotation.Table;
 import com.brouck.horizon.exception.IllegalTableClassException;
 import com.brouck.horizon.exception.SearchNotFoundException;
 import com.brouck.horizon.session.metadata.TableMetaData;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,7 +22,12 @@ public class HorizonSession {
     /**
      * SQLSession对象
      */
-    private final SqlSession _sqlSession;
+    private final SqlSession sqlSession;
+
+    /**
+     * 数据库名
+     */
+    private String database;
 
     /**
      * 表信息元数据
@@ -31,30 +38,62 @@ public class HorizonSession {
      * 创建HorizonSqlSession
      */
     public HorizonSession(SqlSession sqlSession) {
-        this._sqlSession = sqlSession;
+        this.sqlSession = sqlSession;
+        initDataBase();
+    }
+
+    /**
+     * 查询数据库名
+     */
+    private void initDataBase() {
+        sqlSession.openSqlSession(false);
+        JSONObject database = sqlSession.objectQuery("select database()", JSONObject.class);
+        this.database = database.getString("database()");
+        sqlSession.closeSqlSession();
     }
 
     /**
      * 打开事务
      */
     public void openTransaction() {
-        _sqlSession.openSqlSession(true);
+        sqlSession.openSqlSession(true);
     }
 
     /**
      * 关闭事务
      */
     public void closeTransaction() {
-        _sqlSession.closeSqlSession();
+        sqlSession.closeSqlSession();
     }
 
     /**
      * 手动添加表元数据
+     *
      * @param entityClass 实体类
      */
     public void addTableMetaData(Class<?> entityClass) {
         TableMetaData tableMetaData = new TableMetaData(entityClass);
         tableMetaDataMap.put(tableMetaData.getTableName(), tableMetaData);
+    }
+
+    /**
+     * 使用sql单个对象查询
+     *
+     * @param hql    查询sql
+     * @param _class 查询后封装的类
+     */
+    public <T> T objectQuery(String hql, Class<T> _class) {
+        return null;
+    }
+
+    /**
+     * 多个对象查询
+     *
+     * @param hql    查询sql
+     * @param _class 查询后封装的类
+     */
+    public <T> List<T> listQuery(String hql, Class<T> _class) {
+        return null;
     }
 
     /**
@@ -70,7 +109,7 @@ public class HorizonSession {
         if (tableMetaData == null)
             throw new SearchNotFoundException("未找到当前表的元数据信息，当前表名：{}", table.name());
 
-        return new Query<>(_sqlSession, tableMetaData);
+        return new Query<>(sqlSession, tableMetaData);
     }
 
 }

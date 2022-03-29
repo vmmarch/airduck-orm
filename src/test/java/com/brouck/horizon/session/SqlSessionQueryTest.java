@@ -22,7 +22,7 @@ public class SqlSessionQueryTest {
         var sqlSession = new AbstractSqlSession(new Configuration(createDataSource()));
         sqlSession.openSqlSession(false);
 
-        var nextValue = sqlSession.executeQuery("select * from next_val where id = ?", NextVal.class, 3213);
+        var nextValue = sqlSession.objectQuery("select * from next_val where id = ?", NextVal.class, 3213);
         System.out.println(JSONObject.toJSONString(nextValue));
 
         sqlSession.closeSqlSession();

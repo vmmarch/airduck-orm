@@ -1,7 +1,6 @@
 package com.brouck.horizon.session;
 
 import com.brouck.horizon.generator.wrapper.ConditionBuilder;
-import com.brouck.horizon.generator.wrapper.Wrapper;
 import com.brouck.horizon.session.metadata.TableMetaData;
 import com.brouck.horizon.tools.StringUtils;
 
@@ -11,8 +10,7 @@ import java.util.List;
  * @author lts
  * Create time 2022/3/25
  */
-public class Query<Entity> extends ConditionBuilder<Query<Entity>>
-        implements Wrapper {
+public class Query<Entity> extends ConditionBuilder<Query<Entity>> {
 
     private final SqlSession sqlSession;
 
@@ -30,9 +28,9 @@ public class Query<Entity> extends ConditionBuilder<Query<Entity>>
      * 查询单个对象
      */
     @SuppressWarnings("unchecked")
-    public Entity execute() {
+    public Entity objectQuery() {
         sqlSession.openSqlSession(false);
-        Entity entity = (Entity) sqlSession.executeQuery(buildSQL(), tableMetaData.getEntityClass(),
+        Entity entity = (Entity) sqlSession.objectQuery(buildSQL(), tableMetaData.getEntityClass(),
                 getParameters().toArray());
         sqlSession.closeSqlSession();
 
@@ -43,9 +41,9 @@ public class Query<Entity> extends ConditionBuilder<Query<Entity>>
      * 查询多个对象
      */
     @SuppressWarnings("unchecked")
-    public List<Entity> executeBatch() {
+    public List<Entity> listQuery() {
         sqlSession.openSqlSession(false);
-        List<Entity> entities = (List<Entity>) sqlSession.executeQueryArray(buildSQL(), tableMetaData.getEntityClass(),
+        List<Entity> entities = (List<Entity>) sqlSession.listQuery(buildSQL(), tableMetaData.getEntityClass(),
                 getParameters().toArray());
         sqlSession.closeSqlSession();
 

@@ -24,7 +24,7 @@ public class QueryTest {
         Query<User> query = horizonSession.createQuery(User.class);
         query.eq("username", "张三");
 
-        System.out.println(JSON.toJSONString(query.execute()));
+        System.out.println(JSON.toJSONString(query.objectQuery()));
 
     }
 
@@ -40,7 +40,7 @@ public class QueryTest {
         Query<User> query = horizonSession.createQuery(User.class);
         query.in("id", 0, 1, 2, 3);
 
-        System.out.println(JSON.toJSONString(query.executeBatch()));
+        System.out.println(JSON.toJSONString(query.listQuery()));
     }
 
 }

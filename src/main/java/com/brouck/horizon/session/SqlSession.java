@@ -29,7 +29,7 @@ public interface SqlSession
      * @param _class    类对象
      * @param args      查询参数
      */
-    <T> T executeQuery(String sql, Class<T> _class, Object... args);
+    <T> T objectQuery(String sql, Class<T> _class, Object... args);
 
     /**
      * 查询集合列表
@@ -38,7 +38,7 @@ public interface SqlSession
      * @param _class    类对象
      * @param args      查询参数
      */
-    <T> List<T> executeQueryArray(String sql, Class<T> _class, Object... args);
+    <T> List<T> listQuery(String sql, Class<T> _class, Object... args);
 
     /**
      * 更新一条数据

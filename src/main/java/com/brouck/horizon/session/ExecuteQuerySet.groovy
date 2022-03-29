@@ -52,6 +52,9 @@ class ExecuteQuerySet {
         if (resultData.size() > 1)
             throw new MultipleResultSetsException("查询到了多个结果集，一共查询到了${resultData.size()}条数据。但预期结果只有一条。")
 
+        if (resultData.isEmpty())
+            return null
+
         return new JSONObject(resultData[0]).toJavaObject(_class) as T
     }
 

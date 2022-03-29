@@ -1,5 +1,6 @@
 package com.brouck.horizon.session
 
+import com.brouck.horizon.exception.ConnectionOpenedException
 import com.brouck.horizon.tools.ActionUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -29,6 +30,9 @@ class PrecompiledStatement {
      * @param connection    数据库链接
      */
     PrecompiledStatement(String sql, Connection connection) {
+        if (connection == null)
+            throw new ConnectionOpenedException("未获取到数据库链接（Connection）请检查是否执行了openSqlSession()以及closeSqlSession()函数")
+
         if (log.isDebugEnabled())
             log.debug("执行SQL: {}", sql)
 

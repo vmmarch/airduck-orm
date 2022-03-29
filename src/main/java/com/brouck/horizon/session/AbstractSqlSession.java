@@ -47,7 +47,7 @@ public class AbstractSqlSession implements SqlSession {
     }
 
     @Override
-    public <T> T executeQuery(String sql, Class<T> _class, Object... args) {
+    public <T> T objectQuery(String sql, Class<T> _class, Object... args) {
         PrecompiledStatement statement = new PrecompiledStatement(sql, args, this.currentConnection);
         ExecuteQuerySet executeQuerySet = statement.executeQuery();
         statement.close();
@@ -56,7 +56,7 @@ public class AbstractSqlSession implements SqlSession {
     }
 
     @Override
-    public <T> List<T> executeQueryArray(String sql, Class<T> _class, Object... args) {
+    public <T> List<T> listQuery(String sql, Class<T> _class, Object... args) {
         PrecompiledStatement statement = new PrecompiledStatement(sql, args, this.currentConnection);
         ExecuteQuerySet executeQuerySet = statement.executeQuery();
         statement.close();
