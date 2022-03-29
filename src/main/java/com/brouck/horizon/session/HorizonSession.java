@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.brouck.horizon.annotation.Table;
 import com.brouck.horizon.exception.IllegalTableClassException;
 import com.brouck.horizon.exception.SearchNotFoundException;
+import com.brouck.horizon.session.metadata.MetaDataQuery;
+import com.brouck.horizon.session.metadata.MySQLMetaDataQuery;
 import com.brouck.horizon.session.metadata.TableMetaData;
 
 import java.util.HashMap;
@@ -30,6 +32,11 @@ public class HorizonSession {
     private String database;
 
     /**
+     * 元数据查询
+     */
+    private MetaDataQuery metaDataQuery;
+
+    /**
      * 表信息元数据
      */
     private final Map<String, TableMetaData> tableMetaDataMap = new HashMap<>();
@@ -39,17 +46,8 @@ public class HorizonSession {
      */
     public HorizonSession(SqlSession sqlSession) {
         this.sqlSession = sqlSession;
-        initDataBase();
-    }
-
-    /**
-     * 查询数据库名
-     */
-    private void initDataBase() {
-        sqlSession.openSqlSession(false);
-        JSONObject database = sqlSession.objectQuery("select database()", JSONObject.class);
-        this.database = database.getString("database()");
-        sqlSession.closeSqlSession();
+        this.metaDataQuery = new MySQLMetaDataQuery(this);
+        metaDataQuery.columns("user");
     }
 
     /**
@@ -83,7 +81,10 @@ public class HorizonSession {
      * @param _class 查询后封装的类
      */
     public <T> T objectQuery(String hql, Class<T> _class) {
-        return null;
+        sqlSession.openSqlSession(false);
+        T ret = sqlSession.objectQuery(hql, _class);
+        sqlSession.closeSqlSession();
+        return ret;
     }
 
     /**
@@ -93,7 +94,10 @@ public class HorizonSession {
      * @param _class 查询后封装的类
      */
     public <T> List<T> listQuery(String hql, Class<T> _class) {
-        return null;
+        sqlSession.openSqlSession(false);
+        List<T> rets = sqlSession.listQuery(hql, _class);
+        sqlSession.closeSqlSession();
+        return rets;
     }
 
     /**
