@@ -86,7 +86,7 @@ public class ColumnMetaData {
             this.type = "int";
             this.length = this.length == 0 ? 10 : this.length;
         } else if (type == Date.class) {
-            this.type = "timestamp";
+            this.type = "datetime";
         }
 
         // 判断当前字段是不是主键

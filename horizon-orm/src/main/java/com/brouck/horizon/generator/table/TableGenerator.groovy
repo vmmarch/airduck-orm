@@ -55,7 +55,7 @@ class TableGenerator {
 
             table.columns.values().forEach(column -> {
                 // 解析类型
-                var type = "${column.type != "timestamp" ? "${column.type}(${column.length})" : "${column.type}"}"
+                var type = "${column.type != "datetime" ? "${column.type}(${column.length})" : "${column.type}"}"
                 // 是否可以为空
                 var nullable = "${column.nullable ? "" : "not null"}"
                 // 是否有备注

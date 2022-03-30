@@ -1,6 +1,7 @@
 package com.brouck.horizon.query;
 
 import com.alibaba.fastjson.JSON;
+import com.brouck.horizon.commons.DateUtils;
 import com.brouck.horizon.session.Query;
 import com.brouck.horizon.session.GetSQLSession;
 import com.brouck.horizon.session.HorizonSession;
@@ -22,9 +23,12 @@ public class QueryTest {
 
         // 创建查询对象
         Query<User> query = horizonSession.createQuery(User.class);
-        query.eq("username", "张三");
+        query.eq("username", "张三丰");
 
-        System.out.println(JSON.toJSONString(query.objectQuery()));
+        User user = query.objectQuery();
+
+        System.out.printf("createTime: %s\n", DateUtils.format(user.getCreateTime()));
+        System.out.println(JSON.toJSONString(user));
 
     }
 
