@@ -2,6 +2,7 @@ package com.brouck.horizon.session;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * @author brouck
@@ -21,6 +22,11 @@ public interface SqlSession
      * 关闭SqlSession操作，这个操作会关闭数据库链接、事务这些工作。
      */
     void closeSqlSession();
+
+    /**
+     * 自动打开和关闭SqlSession
+     */
+    <T> T openTransaction(Function<SqlSession, T> function, boolean open);
 
     /**
      * 查询单个对象

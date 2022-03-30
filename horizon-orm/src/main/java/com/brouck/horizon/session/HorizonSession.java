@@ -7,6 +7,7 @@ import com.brouck.horizon.session.metadata.MetaDataQuery;
 import com.brouck.horizon.session.metadata.MySQLMetaDataQuery;
 import com.brouck.horizon.session.metadata.TableMetaData;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,10 +80,7 @@ public class HorizonSession {
      * @param _class 查询后封装的类
      */
     public <T> T objectQuery(String hql, Class<T> _class) {
-        sqlSession.openSqlSession(false);
-        T ret = sqlSession.objectQuery(hql, _class);
-        sqlSession.closeSqlSession();
-        return ret;
+        return sqlSession.openTransaction(session -> session.objectQuery(hql, _class), false);
     }
 
     /**
@@ -92,10 +90,7 @@ public class HorizonSession {
      * @param _class 查询后封装的类
      */
     public <T> List<T> listQuery(String hql, Class<T> _class) {
-        sqlSession.openSqlSession(false);
-        List<T> rets = sqlSession.listQuery(hql, _class);
-        sqlSession.closeSqlSession();
-        return rets;
+        return sqlSession.openTransaction(session -> session.listQuery(hql, _class), false);
     }
 
     /**

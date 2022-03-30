@@ -4,6 +4,8 @@ package com.brouck.horizon.session.metadata
 import com.brouck.horizon.session.HorizonSession
 import lombok.Data
 
+import java.util.stream.Collectors
+
 /**
  * 针对MySQL的元数据查询接口
  *
@@ -33,6 +35,13 @@ class MySQLMetaDataQuery implements MetaDataQuery {
         }
 
         return this._database
+    }
+
+    @Override
+    List<String> tables() {
+        return horizonSession.listQuery("""
+            select table_name as `name` from information_schema.tables where table_schema='${database()}'
+        """, String.class)
     }
 
     @Override

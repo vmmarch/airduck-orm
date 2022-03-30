@@ -5,6 +5,7 @@ import com.brouck.horizon.exception.ConnectionOpenedException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * @author brouck
@@ -35,6 +36,18 @@ public class AbstractSqlSession implements SqlSession {
     public void closeSqlSession() {
         configuration.closeConnection(this.currentConnection);
         this.currentConnection = null;
+    }
+
+    @Override
+    public <T> T openTransaction(Function<SqlSession, T> function, boolean open) {
+        T ret = null;
+        try {
+            openSqlSession(open);
+            ret = function.apply(this);
+        } finally {
+            closeSqlSession();
+        }
+        return ret;
     }
 
     /** 校验SqlSession是否重复开启 */

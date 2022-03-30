@@ -14,6 +14,11 @@ public interface MetaDataQuery {
     String database();
 
     /**
+     * 当前库的所有表名
+     */
+    List<String> tables();
+
+    /**
      * 查询表的所有字段数据
      */
     List<ColumnMetaData> columns(String table);

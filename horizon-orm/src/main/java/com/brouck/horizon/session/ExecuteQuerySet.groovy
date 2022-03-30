@@ -32,7 +32,7 @@ class ExecuteQuerySet {
         var columns = []
         var columnCount = metadata.getColumnCount()
         for (int i = 1; i <= columnCount; i++)
-            columns << metadata.getColumnName(i)
+            columns << metadata.getColumnLabel(i)
 
         // 构建结果集
         while(resultSet.next()) {
@@ -64,6 +64,17 @@ class ExecuteQuerySet {
      * @param _class 被转换的对象
      */
     public <T> List<T> asList(Class<T> _class) {
+        if (_class == String) {
+            def retstr = []
+            resultData.forEach({
+                it.entrySet().forEach({
+                    retstr << it.value
+                })
+            })
+
+            return retstr
+        }
+
         return new JSONArray(resultData).toJavaList(_class) as List<T>
     }
 
