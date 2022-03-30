@@ -73,30 +73,30 @@ public class HorizonSession {
     /**
      * 使用sql单个对象查询
      *
-     * @param hql    查询sql
+     * @param sql    查询sql
      * @param _class 查询后封装的类
      */
-    public <T> T objectQuery(String hql, Class<T> _class) {
-        return sqlSession.openTransaction(session -> session.objectQuery(hql, _class), false);
+    public <T> T objectQuery(String sql, Class<T> _class) {
+        return sqlSession.openTransaction(session -> session.objectQuery(sql, _class), false);
     }
 
     /**
      * 多个对象查询
      *
-     * @param hql    查询sql
+     * @param sql    查询sql
      * @param _class 查询后封装的类
      */
-    public <T> List<T> listQuery(String hql, Class<T> _class) {
-        return sqlSession.openTransaction(session -> session.listQuery(hql, _class), false);
+    public <T> List<T> listQuery(String sql, Class<T> _class) {
+        return sqlSession.openTransaction(session -> session.listQuery(sql, _class), false);
     }
 
     /**
      * 执行ddl等语句
      *
-     * @param hql sql语句
+     * @param sql sql语句
      */
-    public void execute(String hql) {
-        sqlSession.openTransaction(session -> session.execute(hql), false);
+    public void execute(String sql) {
+        sqlSession.openTransaction(session -> session.execute(sql), false);
     }
 
     /**
