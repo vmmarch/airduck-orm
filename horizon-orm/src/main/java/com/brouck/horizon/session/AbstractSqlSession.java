@@ -93,4 +93,12 @@ public class AbstractSqlSession implements SqlSession {
         return ret;
     }
 
+    @Override
+    public boolean execute(String sql) {
+        PrecompiledStatement statement = new PrecompiledStatement(sql, this.currentConnection);
+        boolean ret = statement.execute();
+        statement.close();
+
+        return ret;
+    }
 }

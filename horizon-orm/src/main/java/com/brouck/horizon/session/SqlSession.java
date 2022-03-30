@@ -8,8 +8,7 @@ import java.util.function.Function;
  * @author brouck
  * Create time 2022/3/22
  */
-public interface SqlSession
-{
+public interface SqlSession {
 
     /**
      * 打开SqlSession操作，这个操作会开启数据库链接、事务这些工作。
@@ -31,37 +30,44 @@ public interface SqlSession
     /**
      * 查询单个对象
      *
-     * @param sql       sql语句
-     * @param _class    类对象
-     * @param args      查询参数
+     * @param sql    sql语句
+     * @param _class 类对象
+     * @param args   查询参数
      */
     <T> T objectQuery(String sql, Class<T> _class, Object... args);
 
     /**
      * 查询集合列表
      *
-     * @param sql       sql语句
-     * @param _class    类对象
-     * @param args      查询参数
+     * @param sql    sql语句
+     * @param _class 类对象
+     * @param args   查询参数
      */
     <T> List<T> listQuery(String sql, Class<T> _class, Object... args);
 
     /**
      * 更新一条数据
      *
-     * @param sql       sql语句
-     * @param args      参数列表
-     * @return          结果大于1表示更新成功
+     * @param sql  sql语句
+     * @param args 参数列表
+     * @return 结果大于1表示更新成功
      */
     int executeUpdate(String sql, Object... args);
 
     /**
      * 批量更新
      *
-     * @param sql       更新sql
-     * @param args      参数列表
-     * @return          结果大于1表示更新成功
+     * @param sql  更新sql
+     * @param args 参数列表
+     * @return 结果大于1表示更新成功
      */
     int[] executeUpdateBatch(String sql, List<Object[]> args);
+
+    /**
+     * 执行ddl语句
+     *
+     * @param sql sql语句
+     */
+    boolean execute(String sql);
 
 }

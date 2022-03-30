@@ -110,4 +110,5 @@ class PrecompiledStatement {
      */
     int[] executeBatch() { preparedStatement.executeBatch() }
 
+    boolean execute() { preparedStatement.execute() }
 }

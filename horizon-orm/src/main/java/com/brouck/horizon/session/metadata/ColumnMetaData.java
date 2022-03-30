@@ -1,11 +1,11 @@
 package com.brouck.horizon.session.metadata;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.brouck.horizon.annotation.Column;
-import com.brouck.horizon.annotation.ColumnComment;
+import com.brouck.horizon.annotation.*;
 import lombok.Data;
 
 import java.lang.reflect.Field;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -49,6 +49,16 @@ public class ColumnMetaData {
 
     private String comment;
 
+    /**
+     * 是否是主键
+     */
+    private boolean primaryKey;
+
+    /**
+     * 主键生成器
+     */
+    private Class<?> generatedValue;
+
     /** 空的构造器 */
     public ColumnMetaData() {}
 
@@ -64,6 +74,30 @@ public class ColumnMetaData {
         ColumnComment columnComment = field.getAnnotation(ColumnComment.class);
         if (columnComment != null)
             this.comment = columnComment.value();
+
+        // 解析字段类型
+        Class<?> type = field.getType();
+        if (type == String.class) {
+            this.type = "varchar";
+            this.length = this.length == 0 ? 255 : this.length;
+        } else if (type == Integer.class || type == Long.class) {
+            this.type = "int";
+            this.length = this.length == 0 ? 10 : this.length;
+        } else if (type == Date.class) {
+            this.type = "timestamp";
+        }
+
+        // 判断当前字段是不是主键
+        if (field.isAnnotationPresent(Id.class)) {
+            this.primaryKey = true;
+
+            // 获取Id生成器
+            if (field.isAnnotationPresent(GeneratedValue.class)) {
+                GeneratedValue generatedValue = field.getAnnotation(GeneratedValue.class);
+                this.generatedValue = generatedValue.generator();
+            }
+
+        }
     }
 
 }

@@ -15,12 +15,71 @@ class TableGenerator {
      * 生成一张表
      *
      * @param horizonSession sqlSession
-     * @param metadata 表元数据
+     * @param metaDataTables 所有表的数据
      */
-    def generate(HorizonSession sqlSession, TableMetaData metadata) {
-        sqlSession.openTransaction()
+    static def generate(HorizonSession sqlSession, List<TableMetaData> metaDataTables) {
+        var metaDataQuery = sqlSession.getMetaDataQuery()
 
-        sqlSession.closeTransaction()
+        // 待更新的数据库表
+        var tobeUpdated = []
+        // 待新增的数据库表
+        var tobeSaved = []
+
+        // 查询当前数据库所有表
+        var tables = metaDataQuery.tables()
+
+        metaDataTables.forEach(metadata -> {
+            // 如果当前表存在数据库就添加到待更新表中
+            // 如果不存在就添加到待新增中
+            if (metadata.tableName in tables) {
+                tobeUpdated << metadata
+            } else {
+                tobeSaved << metadata
+            }
+        })
+
+        doSave(sqlSession, tobeSaved)
+        doUpdate(sqlSession, tobeUpdated)
+
+    }
+
+    /**
+     * 执行新增表操作
+     */
+    static def doSave(HorizonSession sqlSession, List<TableMetaData> metaDataTables) {
+        metaDataTables.forEach(table -> {
+            // 构建创建表的SQL语句
+            var createTableSQL = new StringBuilder("create table `${table.tableName}` (\n")
+            var primaryKeys = new StringBuilder()
+
+            table.columns.values().forEach(column -> {
+                // 解析类型
+                var type = "${column.type != "timestamp" ? "${column.type}(${column.length})" : "${column.type}"}"
+                createTableSQL.append("""
+                    `${column.name}` ${type} ${column.nullable ? "" : "not null"},""")
+
+                // 主键判断
+                if (column.primaryKey) {
+                    primaryKeys.append "`${column.name}`,"
+                }
+            })
+            primaryKeys.deleteCharAt(primaryKeys.length() - 1)
+            createTableSQL.append("""
+                primary key ($primaryKeys) using btree
+                );
+            """)
+
+            // 执行创建表的sql
+            sqlSession.execute(createTableSQL.toString())
+        })
+    }
+
+    /**
+     * 执行更新表操作
+     */
+    static def doUpdate(HorizonSession sqlSession, List<TableMetaData> metaDataTables) {
+        metaDataTables.forEach(table -> {
+        })
     }
 
 }

@@ -3,10 +3,12 @@ package com.brouck.horizon.session;
 import com.brouck.horizon.annotation.Table;
 import com.brouck.horizon.exception.IllegalTableClassException;
 import com.brouck.horizon.exception.SearchNotFoundException;
+import com.brouck.horizon.generator.table.TableGenerator;
 import com.brouck.horizon.session.metadata.MetaDataQuery;
 import com.brouck.horizon.session.metadata.MySQLMetaDataQuery;
 import com.brouck.horizon.session.metadata.TableMetaData;
 
+import javax.lang.model.type.ArrayType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +36,7 @@ public class HorizonSession {
     /**
      * 元数据查询
      */
-    private MetaDataQuery metaDataQuery;
+    private final MetaDataQuery metaDataQuery;
 
     /**
      * 表信息元数据
@@ -50,17 +52,10 @@ public class HorizonSession {
     }
 
     /**
-     * 打开事务
+     * 获取元数据查询接口
      */
-    public void openTransaction() {
-        sqlSession.openSqlSession(true);
-    }
-
-    /**
-     * 关闭事务
-     */
-    public void closeTransaction() {
-        sqlSession.closeSqlSession();
+    public MetaDataQuery getMetaDataQuery() {
+        return metaDataQuery;
     }
 
     /**
@@ -71,6 +66,13 @@ public class HorizonSession {
     public void addTableMetaData(Class<?> entityClass) {
         TableMetaData tableMetaData = new TableMetaData(entityClass);
         tableMetaDataMap.put(tableMetaData.getTableName(), tableMetaData);
+    }
+
+    /**
+     * 生成表
+     */
+    public void generateTable() {
+        TableGenerator.generate(this, new ArrayList<>(tableMetaDataMap.values()));
     }
 
     /**
@@ -91,6 +93,15 @@ public class HorizonSession {
      */
     public <T> List<T> listQuery(String hql, Class<T> _class) {
         return sqlSession.openTransaction(session -> session.listQuery(hql, _class), false);
+    }
+
+    /**
+     * 执行ddl等语句
+     *
+     * @param hql sql语句
+     */
+    public void execute(String hql) {
+        sqlSession.openTransaction(session -> session.execute(hql), false);
     }
 
     /**
