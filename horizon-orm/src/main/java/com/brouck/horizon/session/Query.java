@@ -29,12 +29,8 @@ public class Query<Entity> extends ConditionBuilder<Query<Entity>> {
      */
     @SuppressWarnings("unchecked")
     public Entity objectQuery() {
-        sqlSession.openSqlSession(false);
-        Entity entity = (Entity) sqlSession.objectQuery(buildSQL(), tableMetaData.getEntityClass(),
-                getParameters().toArray());
-        sqlSession.closeSqlSession();
-
-        return entity;
+        return (Entity) sqlSession.openTransaction(session ->
+            session.objectQuery(buildSQL(), tableMetaData.getEntityClass(), getParameters().toArray()), false);
     }
 
     /**
@@ -42,12 +38,8 @@ public class Query<Entity> extends ConditionBuilder<Query<Entity>> {
      */
     @SuppressWarnings("unchecked")
     public List<Entity> listQuery() {
-        sqlSession.openSqlSession(false);
-        List<Entity> entities = (List<Entity>) sqlSession.listQuery(buildSQL(), tableMetaData.getEntityClass(),
-                getParameters().toArray());
-        sqlSession.closeSqlSession();
-
-        return entities;
+        return (List<Entity>) sqlSession.openTransaction(session -> sqlSession.listQuery(buildSQL(),
+                tableMetaData.getEntityClass(), getParameters().toArray()), false);
     }
 
     /**
