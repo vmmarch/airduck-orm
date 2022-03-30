@@ -21,6 +21,6 @@ public @interface GeneratedValue {
      *
      * id生成器可以自定义配置。只需要实现{@link IdGenerator}接口即可。
      */
-    Class<? extends IdGenerator> generator() default IdGeneratorForIncrement.class;
+    Class<? extends IdGenerator> generator();
 
 }

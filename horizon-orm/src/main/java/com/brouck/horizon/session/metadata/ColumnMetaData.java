@@ -2,6 +2,8 @@ package com.brouck.horizon.session.metadata;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.brouck.horizon.annotation.*;
+import com.brouck.horizon.exception.HorizonException;
+import com.brouck.horizon.generator.id.IdGeneratorForIncrement;
 import lombok.Data;
 
 import java.lang.reflect.Field;
@@ -95,6 +97,12 @@ public class ColumnMetaData {
             if (field.isAnnotationPresent(GeneratedValue.class)) {
                 GeneratedValue generatedValue = field.getAnnotation(GeneratedValue.class);
                 this.generatedValue = generatedValue.generator();
+
+                if (this.generatedValue == IdGeneratorForIncrement.class && !this.type.equals("int")) {
+                    throw new HorizonException("{}#{}字段要使用自增长Id生成器必须确保字段的类型是Int类型，而非其他类型。",
+                            field.getDeclaringClass().getName(), field.getName());
+                }
+
             }
 
         }
