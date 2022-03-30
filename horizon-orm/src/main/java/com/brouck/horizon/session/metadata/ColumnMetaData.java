@@ -73,7 +73,7 @@ public class ColumnMetaData {
         setNullable(column.nullable());
 
         // 获取字段备注
-        ColumnComment columnComment = field.getAnnotation(ColumnComment.class);
+        Comment columnComment = field.getAnnotation(Comment.class);
         if (columnComment != null)
             this.comment = columnComment.value();
 
@@ -102,7 +102,6 @@ public class ColumnMetaData {
                     throw new HorizonException("{}#{}字段要使用自增长Id生成器必须确保字段的类型是Int类型，而非其他类型。",
                             field.getDeclaringClass().getName(), field.getName());
                 }
-
             }
 
         }

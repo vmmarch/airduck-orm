@@ -2,7 +2,6 @@ package com.brouck.horizon.query;
 
 import com.brouck.horizon.annotation.*;
 import com.brouck.horizon.generator.id.IdGeneratorForIncrement;
-import com.brouck.horizon.generator.id.IdGeneratorForSnowflake;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,16 +11,16 @@ import java.util.Date;
  * Create time 2022/3/24
  */
 @Data
-@TableComment("用户表")
+@Comment("用户表")
 @Table(name = "user")
 public class User {
 
     @Id
     @Column(length = 64, nullable = false)
     @GeneratedValue(generator = IdGeneratorForIncrement.class)
-    private String id;
+    private Integer id;
 
-    @ColumnComment("用户名")
+    @Comment("用户名")
     @Column(nullable = false)
     private String username;
 

@@ -2,9 +2,9 @@ package com.brouck.horizon.session.metadata;
 
 import com.brouck.horizon.annotation.Column;
 import com.brouck.horizon.annotation.Table;
-import com.brouck.horizon.annotation.TableComment;
+import com.brouck.horizon.annotation.Comment;
+import com.brouck.horizon.commons.StringUtils;
 import com.brouck.horizon.exception.IllegalTableClassException;
-import com.brouck.horizon.tools.StringUtils;
 import lombok.Getter;
 
 import java.lang.reflect.Field;
@@ -62,9 +62,9 @@ public class TableMetaData {
         this.tableName = table.name();
 
         // 获取表备注
-        TableComment tableComment = tableClass.getAnnotation(TableComment.class);
-        if (tableComment != null)
-            this.tableComment = tableComment.value();
+        Comment comment = tableClass.getAnnotation(Comment.class);
+        if (comment != null)
+            this.tableComment = comment.value();
 
         // 获取所有字段
         for (Field field : tableClass.getDeclaredFields()) {

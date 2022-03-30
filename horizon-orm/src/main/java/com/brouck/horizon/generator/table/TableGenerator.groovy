@@ -1,5 +1,6 @@
 package com.brouck.horizon.generator.table
 
+import com.brouck.horizon.commons.StringUtils
 import com.brouck.horizon.session.HorizonSession
 import com.brouck.horizon.session.metadata.TableMetaData
 
@@ -55,8 +56,12 @@ class TableGenerator {
             table.columns.values().forEach(column -> {
                 // 解析类型
                 var type = "${column.type != "timestamp" ? "${column.type}(${column.length})" : "${column.type}"}"
-                createTableSQL.append("""
-                    `${column.name}` ${type} ${column.nullable ? "" : "not null"},""")
+                // 是否可以为空
+                var nullable = "${column.nullable ? "" : "not null"}"
+                // 是否有备注
+                var comment = "${StringUtils.isEmpty(column.comment) ? "" : "comment '${column.comment}'"}"
+
+                createTableSQL.append("`${column.name}` ${type} ${nullable} ${comment},\n")
 
                 // 主键判断
                 if (column.primaryKey) {
@@ -68,7 +73,7 @@ class TableGenerator {
                 primary key ($primaryKeys) using btree
                 );
             """)
-
+            println(createTableSQL)
             // 执行创建表的sql
             sqlSession.execute(createTableSQL.toString())
         })

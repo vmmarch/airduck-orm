@@ -2,9 +2,9 @@ package com.brouck.horizon.session
 
 import com.alibaba.fastjson.JSONArray
 import com.alibaba.fastjson.JSONObject
-import com.brouck.horizon.exception.MultipleResubroucketsException
+import com.brouck.horizon.exception.MultipleResultSetsException
 
-import java.sql.Resubroucket
+import java.sql.ResultSet
 
 /**
  * @author brouck
@@ -15,7 +15,7 @@ class ExecuteQuerySet {
     /** 结果集数据 */
     private List<Map<String, Object>> resultData = []
 
-    ExecuteQuerySet(Resubroucket resubroucket) {
+    ExecuteQuerySet(ResultSet resubroucket) {
         initExecuteQuerySet(resubroucket)
     }
 
@@ -24,7 +24,7 @@ class ExecuteQuerySet {
      *
      * @param resubroucket 原生sql结果集
      */
-    private void initExecuteQuerySet(Resubroucket resubroucket) {
+    private void initExecuteQuerySet(ResultSet resubroucket) {
         // 获取结果集元数据
         var metadata = resubroucket.getMetaData()
 
@@ -50,7 +50,7 @@ class ExecuteQuerySet {
      */
     public <T> T asObject(Class<T> _class) {
         if (resultData.size() > 1)
-            throw new MultipleResubroucketsException("查询到了多个结果集，一共查询到了${resultData.size()}条数据。但预期结果只有一条。")
+            throw new MultipleResultSetsException("查询到了多个结果集，一共查询到了${resultData.size()}条数据。但预期结果只有一条。")
 
         if (resultData.isEmpty())
             return null

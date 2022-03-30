@@ -87,11 +87,11 @@ class PrecompiledStatement {
      */
     ExecuteQuerySet executeQuery() {
         // 执行查询
-        var resubroucket = preparedStatement.executeQuery()
+        var resultSet = preparedStatement.executeQuery()
         // 封装结果集
-        var executeQuerySet = new ExecuteQuerySet(resubroucket)
+        var executeQuerySet = new ExecuteQuerySet(resultSet)
         // 关闭结果集
-        resubroucket.close()
+        resultSet.close()
 
         return executeQuerySet
     }
