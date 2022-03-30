@@ -4,24 +4,24 @@ package com.brouck.horizon.exception;
  * @author brouck
  * Create time 2022/3/23
  */
-public class MultipleResultSetsException extends RuntimeException {
+public class MultipleResubroucketsException extends RuntimeException {
 
-    public MultipleResultSetsException() {
+    public MultipleResubroucketsException() {
     }
 
-    public MultipleResultSetsException(String message) {
+    public MultipleResubroucketsException(String message) {
         super(message);
     }
 
-    public MultipleResultSetsException(String message, Throwable cause) {
+    public MultipleResubroucketsException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public MultipleResultSetsException(Throwable cause) {
+    public MultipleResubroucketsException(Throwable cause) {
         super(cause);
     }
 
-    public MultipleResultSetsException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public MultipleResubroucketsException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

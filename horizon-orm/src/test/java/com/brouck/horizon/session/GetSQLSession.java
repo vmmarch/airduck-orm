@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author lts
+ * @author brouck
  * Create time 2022/3/25
  */
 public class GetSQLSession {

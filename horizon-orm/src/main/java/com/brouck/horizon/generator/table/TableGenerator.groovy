@@ -6,7 +6,7 @@ import com.brouck.horizon.session.metadata.TableMetaData
 /**
  * 表生成器
  *
- * @author lts
+ * @author brouck
  * Create time 2022/3/29
  */
 class TableGenerator {

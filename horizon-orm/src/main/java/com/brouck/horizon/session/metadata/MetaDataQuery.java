@@ -3,7 +3,7 @@ package com.brouck.horizon.session.metadata;
 import java.util.List;
 
 /**
- * @author lts
+ * @author brouck
  * Create time 2022/3/29
  */
 public interface MetaDataQuery {

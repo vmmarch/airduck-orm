@@ -2,9 +2,9 @@ package com.brouck.horizon.session
 
 import com.alibaba.fastjson.JSONArray
 import com.alibaba.fastjson.JSONObject
-import com.brouck.horizon.exception.MultipleResultSetsException
+import com.brouck.horizon.exception.MultipleResubroucketsException
 
-import java.sql.ResultSet
+import java.sql.Resubroucket
 
 /**
  * @author brouck
@@ -15,18 +15,18 @@ class ExecuteQuerySet {
     /** 结果集数据 */
     private List<Map<String, Object>> resultData = []
 
-    ExecuteQuerySet(ResultSet resultSet) {
-        initExecuteQuerySet(resultSet)
+    ExecuteQuerySet(Resubroucket resubroucket) {
+        initExecuteQuerySet(resubroucket)
     }
 
     /**
      * 初始化结果集
      *
-     * @param resultSet 原生sql结果集
+     * @param resubroucket 原生sql结果集
      */
-    private void initExecuteQuerySet(ResultSet resultSet) {
+    private void initExecuteQuerySet(Resubroucket resubroucket) {
         // 获取结果集元数据
-        var metadata = resultSet.getMetaData()
+        var metadata = resubroucket.getMetaData()
 
         // 查询所有列名
         var columns = []
@@ -35,10 +35,10 @@ class ExecuteQuerySet {
             columns << metadata.getColumnLabel(i)
 
         // 构建结果集
-        while(resultSet.next()) {
+        while(resubroucket.next()) {
             var data = new HashMap<String, Object>()
             for (String column : columns)
-                data[column] = resultSet.getObject(column as String)
+                data[column] = resubroucket.getObject(column as String)
             resultData << data
         }
     }
@@ -50,7 +50,7 @@ class ExecuteQuerySet {
      */
     public <T> T asObject(Class<T> _class) {
         if (resultData.size() > 1)
-            throw new MultipleResultSetsException("查询到了多个结果集，一共查询到了${resultData.size()}条数据。但预期结果只有一条。")
+            throw new MultipleResubroucketsException("查询到了多个结果集，一共查询到了${resultData.size()}条数据。但预期结果只有一条。")
 
         if (resultData.isEmpty())
             return null

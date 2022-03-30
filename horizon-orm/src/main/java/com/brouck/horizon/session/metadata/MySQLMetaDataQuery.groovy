@@ -9,7 +9,7 @@ import java.util.stream.Collectors
 /**
  * 针对MySQL的元数据查询接口
  *
- * @author lts
+ * @author brouck
  * Create time 2022/3/29
  */
 class MySQLMetaDataQuery implements MetaDataQuery {

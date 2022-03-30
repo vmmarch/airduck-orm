@@ -7,7 +7,7 @@ import com.brouck.horizon.tools.StringUtils;
 import java.util.List;
 
 /**
- * @author lts
+ * @author brouck
  * Create time 2022/3/25
  */
 public class Query<Entity> extends ConditionBuilder<Query<Entity>> {

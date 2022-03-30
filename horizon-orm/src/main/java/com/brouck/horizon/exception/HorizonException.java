@@ -3,7 +3,7 @@ package com.brouck.horizon.exception;
 import com.brouck.horizon.tools.StringUtils;
 
 /**
- * @author lts
+ * @author brouck
  * Create time 2022/3/29
  */
 public class HorizonException extends RuntimeException {

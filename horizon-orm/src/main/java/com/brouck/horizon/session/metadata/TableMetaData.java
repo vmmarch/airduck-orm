@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * 表信息的元数据
  *
- * @author lts
+ * @author brouck
  * Create time 2022/3/29
  */
 @Getter

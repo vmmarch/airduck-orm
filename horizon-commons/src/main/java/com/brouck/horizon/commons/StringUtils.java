@@ -1,4 +1,4 @@
-package com.brouck.horizon.tools;
+package com.brouck.horizon.commons;
 
 /* ************************************************************************
  *
@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 
 /**
  * String工具类
- * @author lts
+ * @author brouck
  */
 public
 class StringUtils {

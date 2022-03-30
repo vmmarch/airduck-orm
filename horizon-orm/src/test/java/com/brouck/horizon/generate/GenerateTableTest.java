@@ -6,7 +6,7 @@ import com.brouck.horizon.session.HorizonSession;
 import org.junit.Test;
 
 /**
- * @author lts
+ * @author brouck
  * Create time 2022/3/30
  */
 public class GenerateTableTest {

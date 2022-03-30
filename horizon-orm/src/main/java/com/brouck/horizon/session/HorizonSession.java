@@ -18,7 +18,7 @@ import java.util.Map;
  * horizon sql session封装类，这个类一定是被管理在容器中的。必须要持久化在
  * 内存中。
  *
- * @author lts
+ * @author brouck
  * Create time 2022/3/25
  */
 public class HorizonSession {
