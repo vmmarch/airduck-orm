@@ -6,6 +6,7 @@ import com.brouck.horizon.annotation.ColumnComment;
 import lombok.Data;
 
 import java.lang.reflect.Field;
+import java.util.Locale;
 
 /**
  * 字段元数据
@@ -23,10 +24,10 @@ public class ColumnMetaData {
     private String name;
 
     /**
-     * 是否可以为空
+     * 是否可以为空，String类型是为了整合数据库的返回结果。
      */
     @JSONField(name = "IS_NULLABLE")
-    private String nullable;
+    private boolean nullable;
 
     /**
      * 字段类型
@@ -48,13 +49,16 @@ public class ColumnMetaData {
 
     private String comment;
 
+    /** 空的构造器 */
+    public ColumnMetaData() {}
+
     /**
      * 创建字段元数据
      */
     public ColumnMetaData(Column column, String name, Field field) {
         this.name = name;
         this.length = column.length();
-        this.nullable = String.valueOf(column.nullable());
+        setNullable(column.nullable());
 
         // 获取字段备注
         ColumnComment columnComment = field.getAnnotation(ColumnComment.class);

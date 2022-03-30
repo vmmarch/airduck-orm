@@ -39,8 +39,17 @@ class MySQLMetaDataQuery implements MetaDataQuery {
     List<ColumnMetaData> columns(String table) {
         return horizonSession.listQuery(
                 """
-                        select * from information_schema.columns 
-                        where table_schema='${database()}' and table_name='${table}';
+                    SELECT
+                      COLUMN_NAME,
+                      if(IS_NULLABLE = 'YES', 'true', 'false') as IS_NULLABLE,
+                      DATA_TYPE,
+                      CHARACTER_MAXIMUM_LENGTH,
+                      COLUMN_KEY 
+                    FROM
+                      information_schema.COLUMNS 
+                    WHERE
+                      table_schema = '${database()}' 
+                      AND table_name = '${table}';
                 """, ColumnMetaData.class)
     }
 

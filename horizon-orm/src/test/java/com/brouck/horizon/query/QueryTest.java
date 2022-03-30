@@ -16,7 +16,7 @@ public class QueryTest {
      * 测试单个对象查询
      */
     @Test
-    public void queryForObject() {
+    public void objectQuery() {
         HorizonSession horizonSession = new HorizonSession(GetSQLSession.getSqlSession());
         horizonSession.addTableMetaData(User.class);
 
@@ -32,7 +32,7 @@ public class QueryTest {
      * 测试多个对象查询
      */
     @Test
-    public void queryForList() {
+    public void listQuery() {
         HorizonSession horizonSession = new HorizonSession(GetSQLSession.getSqlSession());
         horizonSession.addTableMetaData(User.class);
 

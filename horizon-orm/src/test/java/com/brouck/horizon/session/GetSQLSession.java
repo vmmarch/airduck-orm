@@ -1,12 +1,9 @@
 package com.brouck.horizon.session;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
-import com.alibaba.fastjson.JSON;
-import org.junit.Test;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

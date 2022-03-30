@@ -1,7 +1,5 @@
 package com.brouck.horizon.generator.wrapper;
 
-import com.brouck.horizon.tools.StringUtils;
-
 import java.util.*;
 
 /**

@@ -1,6 +1,5 @@
 package com.brouck.horizon.session;
 
-import com.alibaba.fastjson.JSONObject;
 import com.brouck.horizon.annotation.Table;
 import com.brouck.horizon.exception.IllegalTableClassException;
 import com.brouck.horizon.exception.SearchNotFoundException;
@@ -47,7 +46,6 @@ public class HorizonSession {
     public HorizonSession(SqlSession sqlSession) {
         this.sqlSession = sqlSession;
         this.metaDataQuery = new MySQLMetaDataQuery(this);
-        metaDataQuery.columns("user");
     }
 
     /**
