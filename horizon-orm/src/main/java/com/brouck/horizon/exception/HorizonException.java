@@ -1,6 +1,6 @@
 package com.brouck.horizon.exception;
 
-import com.brouck.horizon.tools.StringUtils;
+import com.brouck.horizon.commons.StringUtils;
 
 /**
  * @author brouck

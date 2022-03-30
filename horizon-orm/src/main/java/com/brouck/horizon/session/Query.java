@@ -1,8 +1,8 @@
 package com.brouck.horizon.session;
 
+import com.brouck.horizon.commons.StringUtils;
 import com.brouck.horizon.generator.wrapper.ConditionBuilder;
 import com.brouck.horizon.session.metadata.TableMetaData;
-import com.brouck.horizon.tools.StringUtils;
 
 import java.util.List;
 
