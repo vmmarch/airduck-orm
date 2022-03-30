@@ -1,5 +1,6 @@
 package com.brouck.horizon.query;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.brouck.horizon.annotation.*;
 import com.brouck.horizon.generator.id.IdGeneratorForIncrement;
 import lombok.Data;

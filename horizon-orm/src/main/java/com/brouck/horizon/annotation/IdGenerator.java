@@ -1,5 +1,7 @@
 package com.brouck.horizon.annotation;
 
+import com.brouck.horizon.session.HorizonSession;
+
 import java.io.Serializable;
 
 /**
@@ -13,6 +15,6 @@ public interface IdGenerator {
     /**
      * @return 返回生成的Id
      */
-    Serializable generateId();
+    Serializable generateId(HorizonSession horizonSession);
 
 }

@@ -1,6 +1,7 @@
 package com.brouck.horizon.generator.id;
 
 import com.brouck.horizon.annotation.IdGenerator;
+import com.brouck.horizon.session.HorizonSession;
 
 import java.io.Serializable;
 
@@ -13,7 +14,7 @@ import java.io.Serializable;
 public class IdGeneratorForSequence implements IdGenerator {
 
     @Override
-    public Serializable generateId() {
+    public Serializable generateId(HorizonSession horizonSession) {
         return null;
     }
 
