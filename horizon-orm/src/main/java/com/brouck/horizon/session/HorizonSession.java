@@ -29,11 +29,6 @@ public class HorizonSession {
     private final SqlSession sqlSession;
 
     /**
-     * 数据库名
-     */
-    private String database;
-
-    /**
      * 元数据查询
      */
     private final MetaDataQuery metaDataQuery;
