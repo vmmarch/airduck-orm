@@ -16,7 +16,7 @@ class Reflections {
      * 获取类的所有成员对象
      */
     static List<Field> fields(Class<?> _class) {
-        def fields = new LinkedList()
+        var fields = new LinkedList()
 
         Class<?> superClass = _class
         while ((superClass = superClass.getSuperclass()) != Object.class) {
