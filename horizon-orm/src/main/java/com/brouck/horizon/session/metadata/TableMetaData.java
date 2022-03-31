@@ -1,14 +1,15 @@
 package com.brouck.horizon.session.metadata;
 
 import com.brouck.horizon.annotation.Column;
-import com.brouck.horizon.annotation.Table;
 import com.brouck.horizon.annotation.Comment;
+import com.brouck.horizon.annotation.Table;
+import com.brouck.horizon.commons.Reflects;
 import com.brouck.horizon.commons.StringUtils;
 import com.brouck.horizon.exception.IllegalTableClassException;
 import lombok.Getter;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -38,7 +39,7 @@ public class TableMetaData {
     /**
      * 当前表的所有列名
      */
-    private final Map<String, ColumnMetaData> columns = new HashMap<>();
+    private final Map<String, ColumnMetaData> columns = new LinkedHashMap<>();
 
     /**
      * 创建表元数据
@@ -67,7 +68,8 @@ public class TableMetaData {
             this.tableComment = comment.value();
 
         // 获取所有字段
-        for (Field field : tableClass.getDeclaredFields()) {
+        var fields = Reflects.fields(tableClass);
+        for (Field field : fields) {
             if (field.isAnnotationPresent(Column.class)) {
                 Column column = field.getAnnotation(Column.class);
 

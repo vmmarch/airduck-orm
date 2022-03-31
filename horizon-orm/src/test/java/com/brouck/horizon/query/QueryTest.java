@@ -1,6 +1,7 @@
 package com.brouck.horizon.query;
 
 import com.alibaba.fastjson.JSON;
+import com.brouck.horizon.User;
 import com.brouck.horizon.commons.DateUtils;
 import com.brouck.horizon.session.Query;
 import com.brouck.horizon.session.GetSQLSession;

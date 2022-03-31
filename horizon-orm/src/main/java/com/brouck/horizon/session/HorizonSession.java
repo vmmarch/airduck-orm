@@ -3,11 +3,11 @@ package com.brouck.horizon.session;
 import com.brouck.horizon.annotation.Table;
 import com.brouck.horizon.exception.IllegalTableClassException;
 import com.brouck.horizon.exception.SearchNotFoundException;
-import com.brouck.horizon.extend.HorizonModel;
 import com.brouck.horizon.generator.table.TableGenerator;
 import com.brouck.horizon.session.metadata.MetaDataQuery;
 import com.brouck.horizon.session.metadata.MySQLMetaDataQuery;
 import com.brouck.horizon.session.metadata.TableMetaData;
+import com.brouck.horizon.tools.HorizonAsserts;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.Constructor;
@@ -61,11 +61,12 @@ public class HorizonSession {
      */
     @SneakyThrows
     @SuppressWarnings("unchecked")
-    public <T> T createModel(Class<T> _class) {
+    public <T> T createObject(Class<T> _class) {
         Constructor<?> constructor = _class.getConstructor();
         Object object = constructor.newInstance();
         // 获取设置HorizonSession的方法
-        Method setHorizonSession = _class.getDeclaredMethod("setHorizonSession", HorizonSession.class);
+        Method setHorizonSession = _class.
+                getSuperclass().getDeclaredMethod("setHorizonSession", HorizonSession.class);
         setHorizonSession.setAccessible(true);
         setHorizonSession.invoke(object, this);
 
@@ -85,7 +86,7 @@ public class HorizonSession {
     /**
      * 生成表
      */
-    public void generateTable() {
+    public void executeGenerateTable() {
         TableGenerator.generate(this, new ArrayList<>(tableMetaDataMap.values()));
     }
 
@@ -108,6 +109,69 @@ public class HorizonSession {
     public <T> List<T> listQuery(String sql, Class<T> _class) {
         return sqlSession.openTransaction(session -> session.listQuery(sql, _class), false);
     }
+
+    /**
+     * 保存单个对象
+     *
+     * @param object 需要保存到数据库的对象
+     * @return 是否保存成功
+     */
+    public boolean store(Object object) {
+        HorizonAsserts.checkObject(object);
+        return store("", "") > 0;
+    }
+
+    /**
+     * 新增数据
+     *
+     * @param sql  更新sql
+     * @param args 更新参数
+     */
+    public int store(String sql, Object... args) {
+        return update(sql, args);
+    }
+
+    /**
+     * 批量新增数据
+     *
+     * @param sql  更新sql
+     * @param args 批量更新的参数
+     */
+    public int[] store(String sql, List<Object[]> args) {
+        return update(sql, args);
+    }
+
+    /**
+     * 更新单个对象
+     *
+     * @param object 需要更新到数据库的对象
+     * @return 是否更新成功
+     */
+    public boolean update(Object object) {
+        HorizonAsserts.checkObject(object);
+        return store("", "") > 0;
+    }
+
+    /**
+     * 更新数据
+     *
+     * @param sql  更新sql
+     * @param args 更新参数
+     */
+    public int update(String sql, Object... args) {
+        return sqlSession.openTransaction(session -> session.executeUpdate(sql, args), false);
+    }
+
+    /**
+     * 批量更新数据
+     *
+     * @param sql  更新sql
+     * @param args 批量更新的参数
+     */
+    public int[] update(String sql, List<Object[]> args) {
+        return sqlSession.openTransaction(session -> session.executeUpdateBatch(sql, args), true); // 批量处理打开事务
+    }
+
 
     /**
      * 执行ddl等语句
