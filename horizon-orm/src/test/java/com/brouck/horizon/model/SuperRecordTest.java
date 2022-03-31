@@ -11,13 +11,13 @@ import java.util.Date;
  * @author lts
  * Create time 2022/3/31
  */
-public class SuperEntityTest {
+public class SuperRecordTest {
 
     HorizonSession horizonSession = new HorizonSession(GetSQLSession.getSqlSession());
 
     @Test
     public void saveModel() {
-        User user = horizonSession.createObject(User.class);
+        User user = horizonSession.createRecord(User.class);
         user.setUsername("brouck");
         user.setNickname("unreal-brouck");
         user.setComment("test");

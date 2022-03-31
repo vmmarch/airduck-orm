@@ -3,7 +3,7 @@ package com.brouck.horizon;
 import com.brouck.horizon.annotation.Column;
 import com.brouck.horizon.annotation.GeneratedValue;
 import com.brouck.horizon.annotation.Id;
-import com.brouck.horizon.extend.SuperEntity;
+import com.brouck.horizon.extend.SuperRecord;
 import com.brouck.horizon.generator.id.IdGeneratorForIncrement;
 import lombok.Data;
 
@@ -14,7 +14,7 @@ import java.util.Date;
  * Create time 2022/3/31
  */
 @Data
-public class BaseModel extends SuperEntity {
+public class BaseModel extends SuperRecord {
 
     @Id
     @Column(length = 64, nullable = false)

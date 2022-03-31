@@ -61,7 +61,7 @@ public class HorizonSession {
      */
     @SneakyThrows
     @SuppressWarnings("unchecked")
-    public <T> T createObject(Class<T> _class) {
+    public <T> T createRecord(Class<T> _class) {
         HorizonAsserts.includeSuperEntity(_class);
         Constructor<?> constructor = _class.getConstructor();
         Object object = constructor.newInstance();
