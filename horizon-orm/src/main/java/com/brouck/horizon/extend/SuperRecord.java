@@ -17,21 +17,22 @@ public class SuperRecord {
     /**
      * 执行保存操作
      */
-    public void store() {
-
+    public boolean store() {
+        return horizonSession.store(this);
     }
 
     /**
      * 执行更新操作
      */
-    public void update() {
+    public boolean update() {
+        return horizonSession.update(this);
     }
 
     /**
      * 执行删除操作
      */
-    public void remove() {
-
+    public boolean remove() {
+        return horizonSession.remove(this);
     }
 
 }

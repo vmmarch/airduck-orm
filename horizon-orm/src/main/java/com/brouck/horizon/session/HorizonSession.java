@@ -8,7 +8,7 @@ import com.brouck.horizon.generator.table.TableGenerator;
 import com.brouck.horizon.session.metadata.MetaDataQuery;
 import com.brouck.horizon.session.metadata.MySQLMetaDataQuery;
 import com.brouck.horizon.session.metadata.TableMetaData;
-import com.brouck.horizon.tools.HorizonAsserts;
+import com.brouck.horizon.tools.HorizonUtils;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.Constructor;
@@ -63,7 +63,7 @@ public class HorizonSession {
     @SneakyThrows
     @SuppressWarnings("unchecked")
     public <T> T createRecord(Class<T> _class) {
-        HorizonAsserts.includeSuperEntity(_class);
+        HorizonUtils.includeSuperEntity(_class);
         Constructor<?> constructor = _class.getConstructor();
         Object object = constructor.newInstance();
         // 获取设置HorizonSession的方法
@@ -81,7 +81,7 @@ public class HorizonSession {
      * @param entityClass 实体类
      */
     public void addTableMetaData(Class<?> entityClass) {
-        HorizonAsserts.includeSuperEntity(entityClass);
+        HorizonUtils.includeSuperEntity(entityClass);
         TableMetaData tableMetaData = new TableMetaData(entityClass);
         tableMetaDataMap.put(tableMetaData.getName(), tableMetaData);
     }
@@ -120,7 +120,16 @@ public class HorizonSession {
      * @return 是否保存成功
      */
     public boolean store(Object object) {
-        HorizonAsserts.checkObject(object);
+        HorizonUtils.checkObject(object);
+        String tableName = HorizonUtils.getTableName(object);
+        TableMetaData tableMetaData = tableMetaDataMap.get(tableName);
+
+        // 获取所有字段以及字段值
+        var args = new ArrayList<>();
+        tableMetaData.getColumns().values().forEach(column -> {
+            column.getValue(object);
+        });
+
         return store("", "") > 0;
     }
 
@@ -145,13 +154,20 @@ public class HorizonSession {
     }
 
     /**
+     * 根据主键删除记录
+     */
+    public boolean remove(Object object) {
+        return false;
+    }
+
+    /**
      * 更新单个对象
      *
      * @param object 需要更新到数据库的对象
      * @return 是否更新成功
      */
     public boolean update(Object object) {
-        HorizonAsserts.checkObject(object);
+        HorizonUtils.checkObject(object);
         return store("", "") > 0;
     }
 

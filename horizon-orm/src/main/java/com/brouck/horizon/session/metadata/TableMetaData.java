@@ -32,7 +32,7 @@ public class TableMetaData {
     private String comment;
 
     /**
-     * 获取实体class对象
+     * 实体class对象
      */
     private Class<?> entityClass;
 

@@ -5,6 +5,7 @@ import com.brouck.horizon.annotation.*;
 import com.brouck.horizon.exception.HorizonException;
 import com.brouck.horizon.generator.id.IdGeneratorForIncrement;
 import lombok.Data;
+import lombok.SneakyThrows;
 
 import java.lang.reflect.Field;
 import java.util.Date;
@@ -64,6 +65,8 @@ public class ColumnMetaData {
      */
     private Class<?> generatedValue;
 
+    private Field columnField;
+
     /** 空的构造器 */
     public ColumnMetaData() {}
 
@@ -73,6 +76,7 @@ public class ColumnMetaData {
     public ColumnMetaData(Column column, String name, Field field) {
         this.name = name;
         this.length = column.length();
+        this.columnField = field;
         setNullable(column.nullable());
 
         // 获取字段备注
@@ -108,6 +112,14 @@ public class ColumnMetaData {
             }
 
         }
+    }
+
+    /**
+     * 获取当前对象的成员值
+     */
+    @SneakyThrows
+    public Object getValue(Object object) {
+        return columnField.get(object);
     }
 
 }
