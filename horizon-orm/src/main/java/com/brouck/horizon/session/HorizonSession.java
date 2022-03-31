@@ -1,6 +1,7 @@
 package com.brouck.horizon.session;
 
 import com.brouck.horizon.annotation.Table;
+import com.brouck.horizon.commons.Reflections;
 import com.brouck.horizon.exception.IllegalTableClassException;
 import com.brouck.horizon.exception.SearchNotFoundException;
 import com.brouck.horizon.generator.table.TableGenerator;
@@ -57,7 +58,7 @@ public class HorizonSession {
     }
 
     /**
-     * 创建HorizonModel对象
+     * 创建一条记录对象
      */
     @SneakyThrows
     @SuppressWarnings("unchecked")
@@ -66,8 +67,8 @@ public class HorizonSession {
         Constructor<?> constructor = _class.getConstructor();
         Object object = constructor.newInstance();
         // 获取设置HorizonSession的方法
-        Method setHorizonSession = _class.
-                getSuperclass().getDeclaredMethod("setHorizonSession", HorizonSession.class);
+        Method setHorizonSession =
+                Reflections.searchMethods(_class,"setHorizonSession", HorizonSession.class);
         setHorizonSession.setAccessible(true);
         setHorizonSession.invoke(object, this);
 

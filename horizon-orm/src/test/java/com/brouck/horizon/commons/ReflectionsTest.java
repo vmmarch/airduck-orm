@@ -7,11 +7,11 @@ import org.junit.Test;
  * @author lts
  * Create time 2022/3/31
  */
-public class ReflectsTest {
+public class ReflectionsTest {
 
     @Test
     public void fields() {
-        Reflects.fields(User.class);
+        Reflections.fields(User.class);
     }
 
 }
