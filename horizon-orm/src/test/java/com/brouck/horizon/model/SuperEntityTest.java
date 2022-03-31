@@ -11,7 +11,7 @@ import java.util.Date;
  * @author lts
  * Create time 2022/3/31
  */
-public class HorizonObjectTest {
+public class SuperEntityTest {
 
     HorizonSession horizonSession = new HorizonSession(GetSQLSession.getSqlSession());
 

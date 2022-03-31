@@ -62,6 +62,7 @@ public class HorizonSession {
     @SneakyThrows
     @SuppressWarnings("unchecked")
     public <T> T createObject(Class<T> _class) {
+        HorizonAsserts.includeSuperEntity(_class);
         Constructor<?> constructor = _class.getConstructor();
         Object object = constructor.newInstance();
         // 获取设置HorizonSession的方法
@@ -79,6 +80,7 @@ public class HorizonSession {
      * @param entityClass 实体类
      */
     public void addTableMetaData(Class<?> entityClass) {
+        HorizonAsserts.includeSuperEntity(entityClass);
         TableMetaData tableMetaData = new TableMetaData(entityClass);
         tableMetaDataMap.put(tableMetaData.getTableName(), tableMetaData);
     }

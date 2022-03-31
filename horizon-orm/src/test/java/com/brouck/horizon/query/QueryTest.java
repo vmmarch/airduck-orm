@@ -28,7 +28,6 @@ public class QueryTest {
 
         User user = query.objectQuery();
         user.setUsername("张叽叽");
-        user.update(); // 根据主键更新到数据库
 
         System.out.printf("createTime: %s\n", DateUtils.format(user.getCreateTime()));
         System.out.println(JSON.toJSONString(user));

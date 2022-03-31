@@ -6,7 +6,7 @@ import com.brouck.horizon.session.HorizonSession;
  * @author brouck
  * Create time 2022/3/30
  */
-public class HorizonObject {
+public class SuperEntity {
 
     private HorizonSession horizonSession;
 
