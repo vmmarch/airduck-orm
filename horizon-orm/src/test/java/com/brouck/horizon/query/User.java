@@ -1,7 +1,7 @@
 package com.brouck.horizon.query;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.brouck.horizon.annotation.*;
+import com.brouck.horizon.extend.HorizonModel;
 import com.brouck.horizon.generator.id.IdGeneratorForIncrement;
 import lombok.Data;
 
@@ -14,7 +14,7 @@ import java.util.Date;
 @Data
 @Comment("用户表")
 @Table(name = "user")
-public class User {
+public class User extends HorizonModel {
 
     @Id
     @Column(length = 64, nullable = false)

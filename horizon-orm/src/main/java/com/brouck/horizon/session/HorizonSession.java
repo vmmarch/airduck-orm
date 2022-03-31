@@ -3,12 +3,15 @@ package com.brouck.horizon.session;
 import com.brouck.horizon.annotation.Table;
 import com.brouck.horizon.exception.IllegalTableClassException;
 import com.brouck.horizon.exception.SearchNotFoundException;
+import com.brouck.horizon.extend.HorizonModel;
 import com.brouck.horizon.generator.table.TableGenerator;
 import com.brouck.horizon.session.metadata.MetaDataQuery;
 import com.brouck.horizon.session.metadata.MySQLMetaDataQuery;
 import com.brouck.horizon.session.metadata.TableMetaData;
+import lombok.SneakyThrows;
 
-import javax.lang.model.type.ArrayType;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +54,22 @@ public class HorizonSession {
      */
     public MetaDataQuery getMetaDataQuery() {
         return metaDataQuery;
+    }
+
+    /**
+     * 创建HorizonModel对象
+     */
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    public <T> T createModel(Class<T> _class) {
+        Constructor<?> constructor = _class.getConstructor();
+        Object object = constructor.newInstance();
+        // 获取设置HorizonSession的方法
+        Method setHorizonSession = _class.getDeclaredMethod("setHorizonSession", HorizonSession.class);
+        setHorizonSession.setAccessible(true);
+        setHorizonSession.invoke(object, this);
+
+        return (T) object;
     }
 
     /**
