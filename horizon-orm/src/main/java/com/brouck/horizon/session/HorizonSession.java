@@ -83,7 +83,7 @@ public class HorizonSession {
     public void addTableMetaData(Class<?> entityClass) {
         HorizonAsserts.includeSuperEntity(entityClass);
         TableMetaData tableMetaData = new TableMetaData(entityClass);
-        tableMetaDataMap.put(tableMetaData.getTableName(), tableMetaData);
+        tableMetaDataMap.put(tableMetaData.getName(), tableMetaData);
     }
 
     /**

@@ -15,7 +15,7 @@ class Reflections {
     /**
      * 获取类的所有成员对象
      */
-    static List<Field> fields(Class<?> _class) {
+    static List<Field> searchFields(Class<?> _class) {
         var fields = new LinkedList()
 
         Class<?> superClass = _class

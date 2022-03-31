@@ -11,7 +11,7 @@ public class ReflectionsTest {
 
     @Test
     public void fields() {
-        Reflections.fields(User.class);
+        Reflections.searchFields(User.class);
     }
 
 }

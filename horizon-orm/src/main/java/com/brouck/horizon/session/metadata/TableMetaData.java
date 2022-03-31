@@ -24,12 +24,12 @@ public class TableMetaData {
     /**
      * 表名
      */
-    private String tableName;
+    private String name;
 
     /**
      * 表备注
      */
-    private String tableComment;
+    private String comment;
 
     /**
      * 获取实体class对象
@@ -60,15 +60,15 @@ public class TableMetaData {
     private void parseMetaData(Class<?> tableClass) {
         // 获取表名
         Table table = tableClass.getAnnotation(Table.class);
-        this.tableName = table.name();
+        this.name = table.name();
 
         // 获取表备注
         Comment comment = tableClass.getAnnotation(Comment.class);
         if (comment != null)
-            this.tableComment = comment.value();
+            this.comment = comment.value();
 
         // 获取所有字段
-        var fields = Reflections.fields(tableClass);
+        var fields = Reflections.searchFields(tableClass);
         for (Field field : fields) {
             if (field.isAnnotationPresent(Column.class)) {
                 Column column = field.getAnnotation(Column.class);

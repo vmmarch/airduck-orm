@@ -1,6 +1,7 @@
 package com.brouck.horizon.generator.table
 
 import com.brouck.horizon.commons.StringUtils
+import com.brouck.horizon.generator.id.IdGeneratorForIncrement
 import com.brouck.horizon.session.HorizonSession
 import com.brouck.horizon.session.metadata.TableMetaData
 
@@ -32,7 +33,7 @@ class TableGenerator {
         metaDataTables.forEach(metadata -> {
             // 如果当前表存在数据库就添加到待更新表中
             // 如果不存在就添加到待新增中
-            if (metadata.tableName in tables) {
+            if (metadata.name in tables) {
                 tobeUpdated << metadata
             } else {
                 tobeSaved << metadata
@@ -50,7 +51,7 @@ class TableGenerator {
     static def doSave(HorizonSession sqlSession, List<TableMetaData> metaDataTables) {
         metaDataTables.forEach(table -> {
             // 构建创建表的SQL语句
-            var createTableSQL = new StringBuilder("create table `${table.tableName}` (\n")
+            var createTableSQL = new StringBuilder("create table `${table.name}` (\n")
             var primaryKeys = new StringBuilder()
 
             table.columns.values().forEach(column -> {
@@ -60,8 +61,13 @@ class TableGenerator {
                 var nullable = "${column.nullable ? "" : "not null"}"
                 // 是否有备注
                 var comment = "${StringUtils.isEmpty(column.comment) ? "" : "comment '${column.comment}'"}"
+                // 如果当前字段是主键并且生成器是主键自增
+                var autoIncrement = ""
+                if (column.primaryKey && column.generatedValue == IdGeneratorForIncrement) {
+                    autoIncrement = "auto_increment"
+                }
 
-                createTableSQL.append("`${column.name}` ${type} ${nullable} ${comment},\n")
+                createTableSQL.append("`${column.name}` ${type} ${nullable} ${comment} ${autoIncrement},\n")
 
                 // 主键判断
                 if (column.primaryKey) {

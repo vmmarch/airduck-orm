@@ -30,7 +30,7 @@ public class Query<Entity> extends ConditionBuilder<Query<Entity>> {
     @SuppressWarnings("unchecked")
     public Entity objectQuery() {
         return (Entity) sqlSession.openTransaction(session ->
-            session.objectQuery(buildSQL(), tableMetaData.getEntityClass(), getParameters().toArray()), false);
+            session.objectQuery(sql(), tableMetaData.getEntityClass(), getParameters().toArray()), false);
     }
 
     /**
@@ -38,17 +38,17 @@ public class Query<Entity> extends ConditionBuilder<Query<Entity>> {
      */
     @SuppressWarnings("unchecked")
     public List<Entity> listQuery() {
-        return (List<Entity>) sqlSession.openTransaction(session -> sqlSession.listQuery(buildSQL(),
+        return (List<Entity>) sqlSession.openTransaction(session -> sqlSession.listQuery(sql(),
                 tableMetaData.getEntityClass(), getParameters().toArray()), false);
     }
 
     /**
      * @return 构建查询sql
      */
-    private String buildSQL() {
+    private String sql() {
         // 构建查询sql
         return StringUtils.format("select {} from {} {}", tableMetaData.getAllQueryColumns(),
-                tableMetaData.getTableName(),
+                tableMetaData.getName(),
                 getWhereSQL());
     }
 

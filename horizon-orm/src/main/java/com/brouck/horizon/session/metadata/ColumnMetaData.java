@@ -49,6 +49,9 @@ public class ColumnMetaData {
     @JSONField(name = "COLUMN_KEY")
     private String key;
 
+    /**
+     * 字段注释
+     */
     private String comment;
 
     /**
