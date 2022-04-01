@@ -1,19 +1,15 @@
 package com.brouck.session;
 
-import com.brouck.commons.Reflections;
-import com.brouck.generator.table.TableGenerator;
 import com.brouck.annotation.Table;
 import com.brouck.exception.IllegalTableClassException;
 import com.brouck.exception.SearchNotFoundException;
+import com.brouck.generator.table.TableGenerator;
 import com.brouck.session.metadata.MetaDataQuery;
 import com.brouck.session.metadata.MySQLMetaDataQuery;
 import com.brouck.session.metadata.TableMetaData;
 import com.brouck.session.sql.SQLGenerator;
 import com.brouck.tools.BrouckUtils;
-import lombok.SneakyThrows;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -53,36 +49,6 @@ public class BrouckSession {
      */
     public MetaDataQuery getMetaDataQuery() {
         return metaDataQuery;
-    }
-
-    /**
-     * 创建一条记录对象
-     */
-    @SneakyThrows
-    @SuppressWarnings("unchecked")
-    public <T> T createRecord(Class<T> _class) {
-        BrouckUtils.includeSuperEntity(_class);
-        Constructor<?> constructor = _class.getConstructor();
-        Object object = constructor.newInstance();
-        // 获取设置HorizonSession的方法
-        Method setHorizonSession =
-                Reflections.searchMethods(_class, "setHorizonSession", BrouckSession.class);
-        setHorizonSession.setAccessible(true);
-        setHorizonSession.invoke(object, this);
-
-        return (T) object;
-    }
-
-    /**
-     * 创建多条记录
-     */
-    public <T> Records<T> createRecords(Class<T> _class, int size) {
-        // 循环size创建records
-        Records<T> records = new Records<>();
-        for (int i = 0; i < size; i++) {
-            records.add(createRecord(_class));
-        }
-        return records;
     }
 
     /**

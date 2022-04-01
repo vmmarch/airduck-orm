@@ -3,7 +3,6 @@ package com.brouck;
 import com.brouck.annotation.Column;
 import com.brouck.annotation.GeneratedValue;
 import com.brouck.annotation.Id;
-import com.brouck.extend.SuperRecord;
 import com.brouck.generator.id.IdGeneratorForIncrement;
 import lombok.Data;
 
@@ -14,7 +13,7 @@ import java.util.Date;
  * Create time 2022/3/31
  */
 @Data
-public class BaseModel extends SuperRecord {
+public class BaseModel {
 
     @Id
     @Column(length = 64, nullable = false)

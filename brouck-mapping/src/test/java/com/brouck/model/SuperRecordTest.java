@@ -22,7 +22,7 @@ public class SuperRecordTest {
         brouckSession.addTableMetaData(User.class);
         brouckSession.executeGenerateTable();
 
-        User user = brouckSession.createRecord(User.class);
+        User user = new User();
         user.setUsername("brouck-0");
         user.setNickname("unreal-brouck-0");
         user.setComment("test");
@@ -30,7 +30,7 @@ public class SuperRecordTest {
         user.setUpdateTime(new Date());
 
         // 保存到数据库
-        user.store();
+        brouckSession.store(user);
     }
 
 
