@@ -204,7 +204,7 @@ public class HorizonSession {
      * @param args 批量更新的参数
      */
     public int[] update(String sql, List<Object[]> args) {
-        return sqlSession.openTransaction(session -> session.executeUpdateBatch(sql, args), true); // 批量处理打开事务
+        return sqlSession.openTransaction(session -> session.executeUpdateBatch(sql, args), false); // 批量处理打开事务
     }
 
 

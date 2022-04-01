@@ -23,6 +23,11 @@ public interface SqlSession {
     void closeSqlSession();
 
     /**
+     * 关闭SqlSession操作，这个操作会关闭数据库链接、事务这些工作。
+     */
+    void closeSqlSession(Throwable e);
+
+    /**
      * 自动打开和关闭SqlSession
      */
     <T> T openTransaction(Function<SqlSession, T> function, boolean open);

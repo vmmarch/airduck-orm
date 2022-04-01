@@ -32,7 +32,7 @@ public class Configuration {
     public Connection openConnection(boolean openTransaction) throws SQLException {
         var connection = dataSource.getConnection();
         connection.setAutoCommit(!openTransaction);
-        closeAutoCommit = openTransaction;
+        closeAutoCommit = !connection.getAutoCommit();
 
         return connection;
     }
@@ -40,19 +40,19 @@ public class Configuration {
     /**
      * 关闭数据库链接
      */
-    public void closeConnection(Connection connection) {
+    public void closeConnection(Connection connection, Throwable throwable) {
         try {
             // 提交链接
-            if (closeAutoCommit)
-                connection.commit();
+            if (closeAutoCommit) {
+                if (throwable != null) {
+                    ActionUtils.connectionRollback(connection);
+                } else {
+                    ActionUtils.commit(connection);
 
-        } catch (SQLException e) {
-            // 如果出现异常回滚
-            if (closeAutoCommit)
-                ActionUtils.connectionRollback(connection);
-
-            e.printStackTrace();
+                }
+            }
         } finally {
+            closeAutoCommit = true;
             ActionUtils.close(connection);
         }
     }

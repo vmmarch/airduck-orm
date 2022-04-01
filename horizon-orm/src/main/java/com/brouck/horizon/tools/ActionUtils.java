@@ -10,6 +10,18 @@ import java.sql.SQLException;
 public class ActionUtils {
 
     /**
+     * 提交
+     */
+    public static void commit(Connection connection) {
+        try {
+            if (connection != null)
+                connection.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * 关闭流或者链接
      * @param closeable 自动关闭接口
      */

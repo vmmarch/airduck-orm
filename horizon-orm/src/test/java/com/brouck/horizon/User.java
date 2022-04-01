@@ -18,7 +18,7 @@ public class User extends BaseModel {
     @Column(nullable = false)
     private String username;
 
-    @Column
+    @Column(nullable = false)
     private String nickname;
 
     @Column(length = 528, nullable = false)

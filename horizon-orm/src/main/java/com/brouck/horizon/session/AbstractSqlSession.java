@@ -34,20 +34,27 @@ public class AbstractSqlSession implements SqlSession {
 
     @Override
     public void closeSqlSession() {
-        configuration.closeConnection(this.currentConnection);
+        closeSqlSession(null);
+    }
+
+    @Override
+    public void closeSqlSession(Throwable e) {
+        configuration.closeConnection(this.currentConnection, e);
         this.currentConnection = null;
     }
 
     @Override
     public <T> T openTransaction(Function<SqlSession, T> function, boolean open) {
         T ret = null;
+        Throwable throwable = null;
         try {
             openSqlSession(open);
             ret = function.apply(this);
         } catch (Exception e) {
             e.printStackTrace();
+            throwable = e;
         } finally {
-            closeSqlSession();
+            closeSqlSession(throwable);
         }
         return ret;
     }
