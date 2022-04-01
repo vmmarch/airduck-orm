@@ -8,6 +8,8 @@ import com.brouck.session.metadata.MetaDataQuery;
 import com.brouck.session.metadata.MySQLMetaDataQuery;
 import com.brouck.session.metadata.TableMetaData;
 import com.brouck.session.sql.SQLGenerator;
+import com.brouck.session.wrapper.Query;
+import com.brouck.session.wrapper.Update;
 import com.brouck.tools.BrouckUtils;
 
 import java.util.*;
@@ -57,7 +59,6 @@ public class BrouckSession {
      * @param entityClass 实体类
      */
     public void addTableMetaData(Class<?> entityClass) {
-        BrouckUtils.includeSuperEntity(entityClass);
         TableMetaData tableMetaData = new TableMetaData(entityClass);
         tableMetaDataMap.put(tableMetaData.getName(), tableMetaData);
     }
@@ -173,12 +174,27 @@ public class BrouckSession {
         if (table == null)
             throw new IllegalTableClassException("创建查询失败，实体类必须存在@Table注解。");
 
-        // 查询表元数据
-        TableMetaData tableMetaData = tableMetaDataMap.get(table.name());
-        if (tableMetaData == null)
-            throw new SearchNotFoundException("未找到当前表的元数据信息，当前表名：{}", table.name());
+        return new Query<>(sqlSession, getTableMetaData(table.name()));
+    }
 
-        return new Query<>(sqlSession, tableMetaData);
+    /**
+     * 创建更新对象
+     */
+    public <T> Update<T> createUpdate(Class<T> _class) {
+        Table table = _class.getAnnotation(Table.class);
+        if (table == null)
+            throw new IllegalTableClassException("创建更新失败，实体类必须存在@Table注解。");
+
+        return new Update<>(sqlSession, getTableMetaData(table.name()), _class);
+    }
+
+    private TableMetaData getTableMetaData(String name) {
+        // 查询表元数据
+        TableMetaData tableMetaData = tableMetaDataMap.get(name);
+        if (tableMetaData == null)
+            throw new SearchNotFoundException("未找到当前表的元数据信息，当前表名：{}", name);
+
+        return tableMetaData;
     }
 
 }

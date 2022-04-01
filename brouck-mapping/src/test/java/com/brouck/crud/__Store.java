@@ -1,4 +1,4 @@
-package com.brouck.model;
+package com.brouck.crud;
 
 import com.brouck.commons.Lists;
 import com.brouck.User;
@@ -12,7 +12,7 @@ import java.util.Date;
  * @author brouck
  * Create time 2022/3/31
  */
-public class SuperRecordTest {
+public class __Store {
 
     BrouckSession brouckSession = new BrouckSession(GetSQLSession.getSqlSession());
 

@@ -1,9 +1,9 @@
-package com.brouck.query;
+package com.brouck.crud;
 
 import com.alibaba.fastjson.JSON;
 import com.brouck.commons.DateUtils;
 import com.brouck.User;
-import com.brouck.session.Query;
+import com.brouck.session.wrapper.Query;
 import com.brouck.session.GetSQLSession;
 import com.brouck.session.BrouckSession;
 import org.junit.Test;
@@ -12,7 +12,7 @@ import org.junit.Test;
  * @author brouck
  * Create time 2022/3/25
  */
-public class QueryTest {
+public class __Query {
 
     /**
      * 测试单个对象查询

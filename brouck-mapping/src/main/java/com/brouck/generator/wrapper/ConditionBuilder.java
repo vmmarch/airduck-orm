@@ -12,7 +12,7 @@ public class ConditionBuilder<Children extends ConditionBuilder<Children>> {
     /**
      * where sql语句
      */
-    private final StringBuilder _where = new StringBuilder("where 1 = 1");
+    private final StringBuilder _where = new StringBuilder(" where 1 = 1");
 
     /**
      * 构建好的SQL参数列表

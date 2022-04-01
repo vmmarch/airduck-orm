@@ -28,6 +28,23 @@ class Reflections {
     }
 
     /**
+     * 搜索类中的所有成员包括父类
+     */
+    static Field searchField(Class<?> _class, String name) {
+        var field = _class.getDeclaredFields().find { it.getName() == name }
+        if (field != null)
+            return field
+
+        while ((_class = _class.getSuperclass()) != Object.class) {
+            field = _class.getDeclaredFields().find { it.getName() == name }
+            if (field != null)
+                return field
+        }
+
+        return field
+    }
+
+    /**
      * 获取一个函数的反射对象，搜索所有类包括父类的。
      * 优先从当前类查找，如果找不到会从父类去找。直到找到Object.class类后停止。
      */
@@ -58,4 +75,17 @@ class Reflections {
         }
     }
 
+    /**
+     * 获取成员中的值
+     */
+    static Object getValue(Field columnField, Object object) {
+        columnField.setAccessible(true)
+        try {
+            return columnField.get(object)
+        } catch (IllegalAccessException e) {
+            e.printStackTrace()
+        }
+
+        return null;
+    }
 }

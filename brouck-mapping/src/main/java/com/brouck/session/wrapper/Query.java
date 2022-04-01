@@ -1,7 +1,8 @@
-package com.brouck.session;
+package com.brouck.session.wrapper;
 
 import com.brouck.commons.StringUtils;
 import com.brouck.generator.wrapper.ConditionBuilder;
+import com.brouck.session.SqlSession;
 import com.brouck.session.metadata.TableMetaData;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class Query<Entity> extends ConditionBuilder<Query<Entity>> {
     /**
      * 创建查询对象
      */
-    Query(SqlSession sqlSession, TableMetaData tableMetaData) {
+    public Query(SqlSession sqlSession, TableMetaData tableMetaData) {
         this.sqlSession = sqlSession;
         this.tableMetaData = tableMetaData;
     }
