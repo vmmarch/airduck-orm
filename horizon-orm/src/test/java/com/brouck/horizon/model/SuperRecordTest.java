@@ -22,8 +22,15 @@ public class SuperRecordTest {
         horizonSession.executeGenerateTable();
 
         User user = horizonSession.createRecord(User.class);
-        user.setUsername("brouck");
-        user.setNickname("unreal-brouck");
+        user.setUsername("brouck-0");
+        user.setNickname("unreal-brouck-0");
+        user.setComment("test");
+        user.setCreateTime(new Date());
+        user.setUpdateTime(new Date());
+        user.store(); // 将数据保存到数据库
+
+        user.setUsername("brouck-1");
+        user.setNickname("unreal-brouck-1");
         user.setComment("test");
         user.setCreateTime(new Date());
         user.setUpdateTime(new Date());

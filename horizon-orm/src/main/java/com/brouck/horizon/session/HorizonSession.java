@@ -12,6 +12,7 @@ import com.brouck.horizon.session.metadata.MetaDataQuery;
 import com.brouck.horizon.session.metadata.MySQLMetaDataQuery;
 import com.brouck.horizon.session.metadata.TableMetaData;
 import com.brouck.horizon.tools.HorizonUtils;
+import lombok.Data;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.Constructor;
@@ -44,6 +45,51 @@ public class HorizonSession {
      * 表信息元数据
      */
     private final Map<String, TableMetaData> tableMetaDataMap = new HashMap<>();
+
+    /** 更新数据基本信息类 */
+    @Data
+    static
+    class UpdateDataBaseInfo {
+        /** 表名 */
+        private String tableName;
+        /** 字段列表 */
+        private String columns;
+        /** 字段值列表 */
+        private Object[] values;
+        /** 更新条件 */
+        private String where;
+
+        /**
+         * 构建一个基本信息类
+         */
+        public static UpdateDataBaseInfo build(Object updaeObject, Map<String, TableMetaData> tableMetaDataMap) {
+            String tableName = HorizonUtils.getTableName(updaeObject);
+            TableMetaData tableMetaData = tableMetaDataMap.get(tableName);
+
+            // 获取所有字段以及字段值
+            var insertColumns = new StringBuilder();
+            var args = Lists.newLinkedList();
+            tableMetaData.getColumns().values().forEach(column -> {
+                // 如果是主键并且id是自增长那么就不需要插入
+                if (column.isPrimaryKey() && column.getGeneratedValue() == IdGeneratorForIncrement.class) {
+                    return;
+                }
+
+                args.add(column.getValue(updaeObject));
+                insertColumns.append("`").append(column.getName()).append("`").append(",");
+            });
+            StringUtils.removeLastCharacter(insertColumns);
+
+            // 设置对应的数据
+            var updateDataBaseInfo = new UpdateDataBaseInfo();
+            updateDataBaseInfo.setTableName(tableMetaData.getName());
+            updateDataBaseInfo.setColumns(insertColumns.toString());
+            updateDataBaseInfo.setValues(args.toArray());
+
+            return updateDataBaseInfo;
+        }
+
+    }
 
     /**
      * 创建HorizonSqlSession
@@ -124,25 +170,11 @@ public class HorizonSession {
      */
     public boolean store(Object object) {
         HorizonUtils.checkObject(object);
-        String tableName = HorizonUtils.getTableName(object);
-        TableMetaData tableMetaData = tableMetaDataMap.get(tableName);
-
-        // 获取所有字段以及字段值
-        var insertColumns = new StringBuilder();
-        var args = Lists.newLinkedList();
-        tableMetaData.getColumns().values().forEach(column -> {
-            // 如果是主键并且id是自增长那么就不需要插入
-            if (column.isPrimaryKey() && column.getGeneratedValue() == IdGeneratorForIncrement.class) {
-                return;
-            }
-
-            args.add(column.getValue(object));
-            insertColumns.append("`").append(column.getName()).append("`").append(",");
-        });
-        StringUtils.removeLastCharacter(insertColumns);
-
-        return store("insert into `" + tableName + "`(" + insertColumns + ") " +
-                HorizonUtils.getParamValue(args.size()), args.toArray()) > 0;
+        // 构建更新数据
+        var updateInfo = UpdateDataBaseInfo.build(object, tableMetaDataMap);
+        // 保存对象
+        return store("insert into `" + updateInfo.getTableName() + "`(" + updateInfo.getColumns() + ") " +
+                HorizonUtils.getParamValue(updateInfo.getValues().length), updateInfo.getValues()) > 0;
     }
 
     /**
