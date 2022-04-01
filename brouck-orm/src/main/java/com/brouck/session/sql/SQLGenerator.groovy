@@ -1,0 +1,70 @@
+package com.brouck.session.sql
+
+
+import com.brouck.session.metadata.TableMetaData
+import com.brouck.tools.BrouckUtils
+
+import java.util.stream.Collectors
+
+/**
+ * sql生成器
+ *
+ * @author brouck
+ * Create time 2022/4/1
+ */
+class SQLGenerator {
+
+    /**
+     * 生成插入单条数据的SQLScript
+     */
+    static SQLScript insert(Object object, Map<String, TableMetaData> tableMetaDataMap) {
+        var tmd = tableMetaDataMap.get(BrouckUtils.getTableName(object))
+        var sqlScript = new SQLScript()
+
+        // 遍历字段获取需要插入的值
+        var columns = com.brouck.commons.Lists.newLinkedList()
+        var params = com.brouck.commons.Lists.newLinkedList()
+        tmd.columns.values().forEach(column -> {
+            if (column.isPrimaryKey() && column.generatedValue == com.brouck.generator.id.IdGeneratorForIncrement) {
+                return
+            }
+
+            var value = column.getValue(object)
+            if (value != null) {
+                columns << "`${column.name}`"
+                params << value
+            }
+
+            sqlScript.addColumn(column)
+        })
+
+        sqlScript.sql = """
+            insert into `${tmd.name}` (${columns.stream().collect(Collectors.joining(","))})
+            values (${columns.stream().map(column -> "?").collect(Collectors.joining(","))})
+        """
+
+        sqlScript.params = params.toArray()
+
+        return sqlScript
+    }
+
+    /**
+     * 生成插入多条数据的SQLScript
+     */
+    static <E> SQLScript insert(Collection<E> collection, Map<String, TableMetaData> tableMetaDataMap) {
+        var sqlScript = insert(collection.iterator().next(), tableMetaDataMap)
+        sqlScript.batchParams = com.brouck.commons.Lists.newLinkedList()
+
+        for (E object : collection) {
+            var params = com.brouck.commons.Lists.newLinkedList()
+            sqlScript.columns.forEach {
+                var value = it.getValue(object)
+                params.add(value)
+            }
+            sqlScript.batchParams.add(params.toArray())
+        }
+
+        return sqlScript
+    }
+
+}

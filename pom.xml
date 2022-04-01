@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.brouck</groupId>
-    <artifactId>horizon</artifactId>
+    <artifactId>brouck</artifactId>
     <packaging>pom</packaging>
     <version>1.2.3.UCK</version>
     <modules>
-        <module>horizon-commons</module>
-        <module>horizon-orm</module>
+        <module>brouck-commons</module>
+        <module>brouck-orm</module>
     </modules>
 
     <properties>
