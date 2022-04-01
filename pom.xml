@@ -10,7 +10,7 @@
     <version>1.2.3.UCK</version>
     <modules>
         <module>brouck-commons</module>
-        <module>brouck-orm</module>
+        <module>brouck-mapping</module>
     </modules>
 
     <properties>
