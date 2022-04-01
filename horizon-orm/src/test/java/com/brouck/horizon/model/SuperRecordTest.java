@@ -17,6 +17,10 @@ public class SuperRecordTest {
 
     @Test
     public void saveModel() {
+        // 生成表
+        horizonSession.addTableMetaData(User.class);
+        horizonSession.executeGenerateTable();
+
         User user = horizonSession.createRecord(User.class);
         user.setUsername("brouck");
         user.setNickname("unreal-brouck");

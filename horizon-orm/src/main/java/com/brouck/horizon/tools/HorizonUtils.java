@@ -1,8 +1,11 @@
 package com.brouck.horizon.tools;
 
 import com.brouck.horizon.annotation.Table;
+import com.brouck.horizon.commons.StringUtils;
 import com.brouck.horizon.exception.HorizonException;
 import com.brouck.horizon.extend.SuperRecord;
+
+import java.util.Collections;
 
 /**
  * 针对于Horizon-ORM项目的工具类，并不适用于其他项目
@@ -57,6 +60,13 @@ public class HorizonUtils {
         }
 
         throw new HorizonException("未获取到@Table注解，请检查{}实体类是否添加了@Table注解", source.getName());
+    }
+
+    /**
+     * 生成value的参数转义符
+     */
+    public static String getParamValue(int size) {
+        return "values(" + StringUtils.join(",", size, "?") + ")";
     }
 
 }

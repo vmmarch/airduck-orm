@@ -1,9 +1,12 @@
 package com.brouck.horizon.session;
 
 import com.brouck.horizon.annotation.Table;
+import com.brouck.horizon.commons.Lists;
 import com.brouck.horizon.commons.Reflections;
+import com.brouck.horizon.commons.StringUtils;
 import com.brouck.horizon.exception.IllegalTableClassException;
 import com.brouck.horizon.exception.SearchNotFoundException;
+import com.brouck.horizon.generator.id.IdGeneratorForIncrement;
 import com.brouck.horizon.generator.table.TableGenerator;
 import com.brouck.horizon.session.metadata.MetaDataQuery;
 import com.brouck.horizon.session.metadata.MySQLMetaDataQuery;
@@ -68,7 +71,7 @@ public class HorizonSession {
         Object object = constructor.newInstance();
         // 获取设置HorizonSession的方法
         Method setHorizonSession =
-                Reflections.searchMethods(_class,"setHorizonSession", HorizonSession.class);
+                Reflections.searchMethods(_class, "setHorizonSession", HorizonSession.class);
         setHorizonSession.setAccessible(true);
         setHorizonSession.invoke(object, this);
 
@@ -125,12 +128,21 @@ public class HorizonSession {
         TableMetaData tableMetaData = tableMetaDataMap.get(tableName);
 
         // 获取所有字段以及字段值
-        var args = new ArrayList<>();
+        var insertColumns = new StringBuilder();
+        var args = Lists.newLinkedList();
         tableMetaData.getColumns().values().forEach(column -> {
-            column.getValue(object);
-        });
+            // 如果是主键并且id是自增长那么就不需要插入
+            if (column.isPrimaryKey() && column.getGeneratedValue() == IdGeneratorForIncrement.class) {
+                return;
+            }
 
-        return store("", "") > 0;
+            args.add(column.getValue(object));
+            insertColumns.append("`").append(column.getName()).append("`").append(",");
+        });
+        StringUtils.removeLastCharacter(insertColumns);
+
+        return store("insert into `" + tableName + "`(" + insertColumns + ") " +
+                HorizonUtils.getParamValue(args.size()), args.toArray()) > 0;
     }
 
     /**

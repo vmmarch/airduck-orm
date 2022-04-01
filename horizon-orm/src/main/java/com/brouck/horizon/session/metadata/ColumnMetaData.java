@@ -77,6 +77,7 @@ public class ColumnMetaData {
         this.name = name;
         this.length = column.length();
         this.columnField = field;
+        this.columnField.setAccessible(true);
         setNullable(column.nullable());
 
         // 获取字段备注
