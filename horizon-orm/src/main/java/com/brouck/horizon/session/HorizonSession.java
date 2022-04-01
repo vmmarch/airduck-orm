@@ -8,6 +8,7 @@ import com.brouck.horizon.generator.table.TableGenerator;
 import com.brouck.horizon.session.metadata.MetaDataQuery;
 import com.brouck.horizon.session.metadata.MySQLMetaDataQuery;
 import com.brouck.horizon.session.metadata.TableMetaData;
+import com.brouck.horizon.session.sql.SQLGenerator;
 import com.brouck.horizon.tools.HorizonUtils;
 import lombok.SneakyThrows;
 
@@ -130,18 +131,22 @@ public class HorizonSession {
      */
     public boolean store(Object object) {
         HorizonUtils.checkObject(object);
-        var script = ScriptBuilder.build(object, tableMetaDataMap);
-        return store(script.getInsertSQL(), script.getValues()) > 0;
+        var sqlScript = SQLGenerator.insert(object, tableMetaDataMap);
+        return store(sqlScript.getSql(), sqlScript.getParams()) > 0;
     }
 
     /**
      * 批量保存多个对象
      *
-     * @param object 需要保存到数据库的对象
+     * @param collections 需要保存到数据库的对象
      * @return 是否保存成功
      */
-    public <E> boolean store(Collection<E> object) {
-        return false;
+    public <E> boolean store(Collection<E> collections) {
+        if (collections.isEmpty()) {
+            return true;
+        }
+        var sqlScript = SQLGenerator.insert(collections, tableMetaDataMap);
+        return store(sqlScript.getSql(), sqlScript.getBatchParams()).length > 0;
     }
 
     /**

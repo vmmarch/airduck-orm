@@ -44,6 +44,8 @@ public class AbstractSqlSession implements SqlSession {
         try {
             openSqlSession(open);
             ret = function.apply(this);
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             closeSqlSession();
         }
