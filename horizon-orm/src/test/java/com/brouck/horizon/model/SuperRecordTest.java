@@ -3,9 +3,11 @@ package com.brouck.horizon.model;
 import com.brouck.horizon.User;
 import com.brouck.horizon.session.GetSQLSession;
 import com.brouck.horizon.session.HorizonSession;
+import com.brouck.horizon.session.Records;
 import org.junit.Test;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author lts
@@ -21,20 +23,20 @@ public class SuperRecordTest {
         horizonSession.addTableMetaData(User.class);
         horizonSession.executeGenerateTable();
 
-        User user = horizonSession.createRecord(User.class);
-        user.setUsername("brouck-0");
-        user.setNickname("unreal-brouck-0");
-        user.setComment("test");
-        user.setCreateTime(new Date());
-        user.setUpdateTime(new Date());
-        user.store(); // 将数据保存到数据库
+        Records<User> users = horizonSession.createRecords(User.class, 2);
+        users.get(0).setUsername("brouck-0");
+        users.get(0).setNickname("unreal-brouck-0");
+        users.get(0).setComment("test");
+        users.get(0).setCreateTime(new Date());
+        users.get(0).setUpdateTime(new Date());
 
-        user.setUsername("brouck-1");
-        user.setNickname("unreal-brouck-1");
-        user.setComment("test");
-        user.setCreateTime(new Date());
-        user.setUpdateTime(new Date());
-        user.store(); // 将数据保存到数据库
+        users.get(1).setUsername("brouck-1");
+        users.get(1).setNickname("unreal-brouck-1");
+        users.get(1).setComment("test");
+        users.get(1).setCreateTime(new Date());
+        users.get(1).setUpdateTime(new Date());
+
+        horizonSession.store(users);
     }
 
 }

@@ -73,6 +73,18 @@ public class HorizonSession {
     }
 
     /**
+     * 创建多条记录
+     */
+    public <T> Records<T> createRecords(Class<T> _class, int size) {
+        // 循环size创建records
+        Records<T> records = new Records<>();
+        for (int i = 0; i < size; i++) {
+            records.add(createRecord(_class));
+        }
+        return records;
+    }
+
+    /**
      * 手动添加表元数据
      *
      * @param entityClass 实体类
@@ -128,7 +140,7 @@ public class HorizonSession {
      * @param object 需要保存到数据库的对象
      * @return 是否保存成功
      */
-    public boolean store(Collection<Object> object) {
+    public <E> boolean store(Collection<E> object) {
         return false;
     }
 
