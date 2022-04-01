@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * 静态数组工具类
  *
- * @author lts
+ * @author brouck
  */
 @SuppressWarnings({"rawtypes"})
 public final class Arrays {

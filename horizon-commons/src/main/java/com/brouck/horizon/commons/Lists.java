@@ -30,7 +30,7 @@ import java.util.function.UnaryOperator;
 /**
  * 静态的List工具类
  *
- * @author lts
+ * @author brouck
  */
 public final class Lists {
 

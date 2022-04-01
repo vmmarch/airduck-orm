@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.Date;
 
 /**
- * @author lts
+ * @author brouck
  * Create time 2022/3/31
  */
 public class SuperRecordTest {

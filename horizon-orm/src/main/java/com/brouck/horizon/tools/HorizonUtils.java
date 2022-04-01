@@ -10,7 +10,7 @@ import java.util.Collections;
 /**
  * 针对于Horizon-ORM项目的工具类，并不适用于其他项目
  *
- * @author lts
+ * @author brouck
  * Create time 2022/3/31
  */
 public class HorizonUtils {

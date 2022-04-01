@@ -7,7 +7,7 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 /**
- * @author lts
+ * @author brouck
  * Create time 2022/4/1
  */
 public class Records<E> implements List<E> {
