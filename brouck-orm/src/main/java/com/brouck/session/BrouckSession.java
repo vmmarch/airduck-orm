@@ -170,24 +170,6 @@ public class BrouckSession {
     }
 
     /**
-     * 根据主键删除记录
-     */
-    public boolean remove(Object object) {
-        return false;
-    }
-
-    /**
-     * 更新单个对象
-     *
-     * @param object 需要更新到数据库的对象
-     * @return 是否更新成功
-     */
-    public boolean update(Object object) {
-        BrouckUtils.checkObject(object);
-        return store("", "") > 0;
-    }
-
-    /**
      * 更新数据
      *
      * @param sql  更新sql

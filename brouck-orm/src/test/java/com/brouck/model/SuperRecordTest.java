@@ -41,7 +41,7 @@ public class SuperRecordTest {
         brouckSession.executeGenerateTable();
 
         var users = Lists.newArrayList();
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 200; i++) {
             User user = new User();
             user.setUsername("brouck-" + i);
             user.setNickname("unreal-brouck-" + i);
