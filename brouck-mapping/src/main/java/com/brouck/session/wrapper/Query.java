@@ -11,7 +11,7 @@ import java.util.List;
  * @author brouck
  * Create time 2022/3/25
  */
-public class Query<Entity> extends ConditionBuilder<Query<Entity>> {
+public class Query extends ConditionBuilder<Query> {
 
     private final SqlSession sqlSession;
 
@@ -29,7 +29,7 @@ public class Query<Entity> extends ConditionBuilder<Query<Entity>> {
      * 查询单个对象
      */
     @SuppressWarnings("unchecked")
-    public Entity objectQuery() {
+    public <Entity> Entity objectQuery() {
         return (Entity) sqlSession.openTransaction(session ->
             session.objectQuery(sql(), tableMetaData.getEntityClass(), getParameters().toArray()), false);
     }
@@ -38,7 +38,7 @@ public class Query<Entity> extends ConditionBuilder<Query<Entity>> {
      * 查询多个对象
      */
     @SuppressWarnings("unchecked")
-    public List<Entity> listQuery() {
+    public <Entity> List<Entity> listQuery() {
         return (List<Entity>) sqlSession.openTransaction(session -> sqlSession.listQuery(sql(),
                 tableMetaData.getEntityClass(), getParameters().toArray()), false);
     }

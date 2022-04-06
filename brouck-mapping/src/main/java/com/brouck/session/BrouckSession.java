@@ -169,12 +169,12 @@ public class BrouckSession {
     /**
      * 创建查询对象
      */
-    public <T> Query<T> createQuery(Class<T> _class) {
+    public Query createQuery(Class<?> _class) {
         Table table = _class.getAnnotation(Table.class);
         if (table == null)
             throw new IllegalTableClassException("创建查询失败，实体类必须存在@Table注解。");
 
-        return new Query<>(sqlSession, getTableMetaData(table.name()));
+        return new Query(sqlSession, getTableMetaData(table.name()));
     }
 
     /**

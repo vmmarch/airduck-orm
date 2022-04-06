@@ -23,7 +23,7 @@ public class __Query {
         brouckSession.addTableMetaData(User.class);
 
         // 创建查询对象
-        Query<User> query = brouckSession.createQuery(User.class);
+        Query query = brouckSession.createQuery(User.class);
         query.eq("username", "张三丰");
 
         User user = query.objectQuery();
@@ -43,8 +43,8 @@ public class __Query {
         brouckSession.addTableMetaData(User.class);
 
         // 创建查询对象
-        Query<User> query = brouckSession.createQuery(User.class);
-        query.in("id", 0, 1, 2, 3);
+        Query query = brouckSession.createQuery(User.class);
+        query.in("id", 301, 302, 303);
 
         System.out.println(JSON.toJSONString(query.listQuery()));
     }
