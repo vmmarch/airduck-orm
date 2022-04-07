@@ -1,6 +1,9 @@
 package com.brouck.session;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
+import com.brouck.session.sqlsession.AbstractSqlSession;
+import com.brouck.session.sqlsession.Configuration;
+import com.brouck.session.sqlsession.SqlSession;
 
 import javax.sql.DataSource;
 import java.util.HashMap;

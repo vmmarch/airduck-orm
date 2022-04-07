@@ -1,7 +1,7 @@
 package com.brouck.generator.id;
 
 import com.brouck.annotation.IdGenerator;
-import com.brouck.session.BrouckSession;
+import com.brouck.session.wrapsession.RainbowSession;
 
 import java.io.Serializable;
 
@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class IdGeneratorForSnowflake implements IdGenerator {
 
     @Override
-    public Serializable generateId(BrouckSession brouckSession) {
+    public Serializable generateId(RainbowSession rainbowSession) {
         return null;
     }
 

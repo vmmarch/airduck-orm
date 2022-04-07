@@ -4,6 +4,9 @@ import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.brouck.session.model.NextVal;
+import com.brouck.session.sqlsession.AbstractSqlSession;
+import com.brouck.session.sqlsession.Configuration;
+import com.brouck.session.sqlsession.SqlSession;
 import org.junit.Test;
 
 import javax.sql.DataSource;

@@ -1,4 +1,4 @@
-package com.brouck.session;
+package com.brouck.session.sqlsession;
 
 import java.util.List;
 import java.util.function.Function;

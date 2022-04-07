@@ -1,6 +1,6 @@
 package com.brouck.annotation;
 
-import com.brouck.session.BrouckSession;
+import com.brouck.session.wrapsession.RainbowSession;
 
 import java.io.Serializable;
 
@@ -15,6 +15,6 @@ public interface IdGenerator {
     /**
      * @return 返回生成的Id
      */
-    Serializable generateId(BrouckSession brouckSession);
+    Serializable generateId(RainbowSession rainbowSession);
 
 }

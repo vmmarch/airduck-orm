@@ -1,4 +1,4 @@
-package com.brouck.session
+package com.brouck.session.sqlsession
 
 import com.brouck.exception.ConnectionOpenedException
 import com.brouck.tools.ActionUtils

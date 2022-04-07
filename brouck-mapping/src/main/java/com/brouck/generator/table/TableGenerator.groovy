@@ -2,8 +2,8 @@ package com.brouck.generator.table
 
 import com.brouck.commons.StringUtils
 import com.brouck.generator.id.IdGeneratorForIncrement
-import com.brouck.session.BrouckSession
-import com.brouck.session.metadata.TableMetaData
+
+import com.brouck.session.metadata.TableProperties
 
 /**
  * 表生成器
@@ -19,7 +19,7 @@ class TableGenerator {
      * @param brouckSession sqlSession
      * @param metaDataTables 所有表的数据
      */
-    static def generate(BrouckSession sqlSession, List<TableMetaData> metaDataTables) {
+    static def generate(VeanSession sqlSession, List<TableProperties> metaDataTables) {
         var metaDataQuery = sqlSession.getMetaDataQuery()
 
         // 待更新的数据库表
@@ -48,7 +48,7 @@ class TableGenerator {
     /**
      * 执行新增表操作
      */
-    static def doSave(BrouckSession sqlSession, List<TableMetaData> metaDataTables) {
+    static def doSave(VeanSession sqlSession, List<TableProperties> metaDataTables) {
         metaDataTables.forEach(table -> {
             // 构建创建表的SQL语句
             var createTableSQL = new StringBuilder("create table `${table.name}` (\n")
@@ -88,7 +88,7 @@ class TableGenerator {
     /**
      * 执行更新表操作
      */
-    static def doUpdate(BrouckSession sqlSession, List<TableMetaData> metaDataTables) {
+    static def doUpdate(VeanSession sqlSession, List<TableProperties> metaDataTables) {
         metaDataTables.forEach(table -> {
         })
     }
