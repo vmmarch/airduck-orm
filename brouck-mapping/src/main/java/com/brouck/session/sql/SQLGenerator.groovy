@@ -1,6 +1,7 @@
 package com.brouck.session.sql
 
-
+import com.brouck.commons.Lists
+import com.brouck.generator.id.IdGeneratorForIncrement
 import com.brouck.session.metadata.TableMetaData
 import com.brouck.tools.BrouckUtils
 
@@ -22,10 +23,10 @@ class SQLGenerator {
         var sqlScript = new SQLScript()
 
         // 遍历字段获取需要插入的值
-        var columns = com.brouck.commons.Lists.newLinkedList()
-        var params = com.brouck.commons.Lists.newLinkedList()
+        var columns = Lists.newLinkedList()
+        var params = Lists.newLinkedList()
         tmd.columns.values().forEach(column -> {
-            if (column.isPrimaryKey() && column.generatedValue == com.brouck.generator.id.IdGeneratorForIncrement) {
+            if (column.isPrimaryKey() && column.generatedValue == IdGeneratorForIncrement) {
                 return
             }
 
@@ -53,10 +54,10 @@ class SQLGenerator {
      */
     static <E> SQLScript insert(Collection<E> collection, Map<String, TableMetaData> tableMetaDataMap) {
         var sqlScript = insert(collection.iterator().next(), tableMetaDataMap)
-        sqlScript.batchParams = com.brouck.commons.Lists.newLinkedList()
+        sqlScript.batchParams = Lists.newLinkedList()
 
         for (E object : collection) {
-            var params = com.brouck.commons.Lists.newLinkedList()
+            var params = Lists.newLinkedList()
             sqlScript.columns.forEach {
                 var value = it.getValue(object)
                 params.add(value)

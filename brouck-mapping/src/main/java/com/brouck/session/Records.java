@@ -17,7 +17,7 @@ public class Records<E> implements List<E> {
     /**
      * 保存所有记录
      */
-    public void storeRecords() {
+    public void saveRecords() {
 
     }
 

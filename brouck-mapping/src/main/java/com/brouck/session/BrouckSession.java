@@ -21,6 +21,7 @@ import java.util.*;
  * @author brouck
  * Create time 2022/3/25
  */
+@SuppressWarnings("UnusedReturnValue")
 public class BrouckSession {
 
     /**
@@ -76,8 +77,8 @@ public class BrouckSession {
      * @param sql    查询sql
      * @param _class 查询后封装的类
      */
-    public <T> T objectQuery(String sql, Class<T> _class) {
-        return sqlSession.openTransaction(session -> session.objectQuery(sql, _class), false);
+    public <T> T objectQuery(String sql, Class<T> _class, Object... args) {
+        return sqlSession.openTransaction(session -> session.objectQuery(sql, _class, args), false);
     }
 
     /**
@@ -86,8 +87,8 @@ public class BrouckSession {
      * @param sql    查询sql
      * @param _class 查询后封装的类
      */
-    public <T> List<T> listQuery(String sql, Class<T> _class) {
-        return sqlSession.openTransaction(session -> session.listQuery(sql, _class), false);
+    public <T> List<T> listQuery(String sql, Class<T> _class, Object... args) {
+        return sqlSession.openTransaction(session -> session.listQuery(sql, _class, args), false);
     }
 
     /**
@@ -96,10 +97,10 @@ public class BrouckSession {
      * @param object 需要保存到数据库的对象
      * @return 是否保存成功
      */
-    public boolean store(Object object) {
+    public boolean save(Object object) {
         BrouckUtils.checkObject(object);
         var sqlScript = SQLGenerator.insert(object, tableMetaDataMap);
-        return store(sqlScript.getSql(), sqlScript.getParams()) > 0;
+        return save(sqlScript.getSql(), sqlScript.getParams()) > 0;
     }
 
     /**
@@ -108,12 +109,12 @@ public class BrouckSession {
      * @param collections 需要保存到数据库的对象
      * @return 是否保存成功
      */
-    public <E> boolean store(Collection<E> collections) {
+    public <E> boolean save(Collection<E> collections) {
         if (collections.isEmpty()) {
             return true;
         }
         var sqlScript = SQLGenerator.insert(collections, tableMetaDataMap);
-        return store(sqlScript.getSql(), sqlScript.getBatchParams()).length > 0;
+        return save(sqlScript.getSql(), sqlScript.getBatchParams()).length > 0;
     }
 
     /**
@@ -122,7 +123,7 @@ public class BrouckSession {
      * @param sql  更新sql
      * @param args 更新参数
      */
-    public int store(String sql, Object... args) {
+    public int save(String sql, Object... args) {
         return update(sql, args);
     }
 
@@ -132,7 +133,7 @@ public class BrouckSession {
      * @param sql  更新sql
      * @param args 批量更新的参数
      */
-    public int[] store(String sql, List<Object[]> args) {
+    public int[] save(String sql, List<Object[]> args) {
         return update(sql, args);
     }
 
@@ -153,7 +154,7 @@ public class BrouckSession {
      * @param args 批量更新的参数
      */
     public int[] update(String sql, List<Object[]> args) {
-        return sqlSession.openTransaction(session -> session.executeUpdateBatch(sql, args), false); // 批量处理打开事务
+        return sqlSession.openTransaction(session -> session.executeUpdateBatch(sql, args), true); // 批量处理打开事务
     }
 
 

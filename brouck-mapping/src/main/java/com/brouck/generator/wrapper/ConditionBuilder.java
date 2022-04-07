@@ -160,6 +160,8 @@ public class ConditionBuilder<Children extends ConditionBuilder<Children>> {
                     _where.append(" and ").append(key).append(" = ? ");
                     _parameters.add(val);
                 });
+
+                return;
             }
 
             if (condition.equals("ne")) {
@@ -167,6 +169,8 @@ public class ConditionBuilder<Children extends ConditionBuilder<Children>> {
                     _where.append(" and ").append(key).append(" != ? ");
                     _parameters.add(val);
                 });
+
+                return;
             }
 
             if (condition.equals("ge")) {
@@ -174,6 +178,8 @@ public class ConditionBuilder<Children extends ConditionBuilder<Children>> {
                     _where.append(" and ").append(key).append(" >= ? ");
                     _parameters.add(val);
                 });
+
+                return;
             }
 
             if (condition.equals("gt")) {
@@ -181,6 +187,8 @@ public class ConditionBuilder<Children extends ConditionBuilder<Children>> {
                     _where.append(" and ").append(key).append(" > ? ");
                     _parameters.add(val);
                 });
+
+                return;
             }
 
             if (condition.equals("le")) {
@@ -188,6 +196,8 @@ public class ConditionBuilder<Children extends ConditionBuilder<Children>> {
                     _where.append(" and ").append(key).append(" <= ? ");
                     _parameters.add(val);
                 });
+
+                return;
             }
 
             if (condition.equals("lt")) {
@@ -195,6 +205,8 @@ public class ConditionBuilder<Children extends ConditionBuilder<Children>> {
                     _where.append(" and ").append(key).append(" < ? ");
                     _parameters.add(val);
                 });
+
+                return;
             }
 
             if (condition.equals("like")) {
@@ -202,6 +214,8 @@ public class ConditionBuilder<Children extends ConditionBuilder<Children>> {
                     _where.append(" and ").append(key).append(" like concat('%', ?").append(",'%') ");
                     _parameters.add(val);
                 });
+
+                return;
             }
 
             if (condition.equals("leftLike")) {
@@ -209,6 +223,8 @@ public class ConditionBuilder<Children extends ConditionBuilder<Children>> {
                     _where.append(" and ").append(key).append(" like concat('%', ?").append(",'') ");
                     _parameters.add(val);
                 });
+
+                return;
             }
 
             if (condition.equals("rightLike")) {
@@ -216,6 +232,8 @@ public class ConditionBuilder<Children extends ConditionBuilder<Children>> {
                     _where.append(" and ").append(key).append(" like concat('', ?").append(",'%') ");
                     _parameters.add(val);
                 });
+
+                return;
             }
 
             if (condition.equals("in")) {

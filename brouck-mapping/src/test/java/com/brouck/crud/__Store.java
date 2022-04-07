@@ -17,7 +17,7 @@ public class __Store {
     BrouckSession brouckSession = new BrouckSession(GetSQLSession.getSqlSession());
 
     @Test
-    public void storeSingle() {
+    public void saveSingle() {
         // 生成表
         brouckSession.addTableMetaData(User.class);
         brouckSession.executeGenerateTable();
@@ -30,7 +30,7 @@ public class __Store {
         user.setUpdateTime(new Date());
 
         // 保存到数据库
-        brouckSession.store(user);
+        brouckSession.save(user);
     }
 
 
@@ -53,7 +53,7 @@ public class __Store {
 
         // 计算以下代码耗时
         long start = System.currentTimeMillis();
-        brouckSession.store(users); // 保存一万条数据到数据库
+        brouckSession.save(users); // 保存一万条数据到数据库
         long end = System.currentTimeMillis();
         System.out.println("耗时：" + (end - start));
 
