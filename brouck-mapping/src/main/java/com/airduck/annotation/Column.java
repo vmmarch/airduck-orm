@@ -15,8 +15,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface Column {
 
-    Varchar type();
-
     /**
      * varchar类型默认长度为255，
      * int类型默认长度为1

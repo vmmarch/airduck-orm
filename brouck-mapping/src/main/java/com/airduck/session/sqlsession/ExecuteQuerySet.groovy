@@ -1,8 +1,8 @@
 package com.airduck.session.sqlsession
 
+import com.airduck.exception.MultipleResultSetsException
 import com.alibaba.fastjson.JSONArray
 import com.alibaba.fastjson.JSONObject
-import com.brouck.exception.MultipleResultSetsException
 
 import java.sql.ResultSet
 

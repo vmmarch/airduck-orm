@@ -8,7 +8,7 @@ import java.util.List;
  * @author lts
  * Create time 2022/4/7
  */
-public class DefaultRainbowSession implements AirduckSession {
+public class AirduckSessionImplements implements AirduckSession {
 
     /**
      * sqlSession, 用于操作JDBC
@@ -16,9 +16,9 @@ public class DefaultRainbowSession implements AirduckSession {
     private final SqlSession _session;
 
     /**
-     * 初始化RainbowSession
+     * 初始化AirduckSessionImplements
      */
-    public DefaultRainbowSession(SqlSession sqlSession) {
+    public AirduckSessionImplements(SqlSession sqlSession) {
         this._session = sqlSession;
     }
 
