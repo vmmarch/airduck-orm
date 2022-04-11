@@ -17,7 +17,7 @@ public @interface Column {
      * 字段长度，如果是varchar类型默认长度为255。
      * 如果是int类型默认长度为11
      */
-    int length() default 255;
+    int length() default 0xffffffff;
 
     /**
      * 是否允许为空

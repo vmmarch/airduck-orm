@@ -10,7 +10,7 @@ import java.lang.reflect.Method
  * @author airduck-vincent
  * Create time 2022/3/31
  */
-class Reflections {
+class ReflectionUtils {
 
     /**
      * 获取类的所有成员对象
