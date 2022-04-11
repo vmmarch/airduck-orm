@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * @author airduck
+ * @author airduck-vincent
  * Create time 2022/3/22
  */
 public class Configuration {

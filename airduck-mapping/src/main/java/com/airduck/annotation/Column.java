@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * 注解在成员上，代表一个表字段
  *
- * @author airduck
+ * @author airduck-vincent
  * Create time 2022/3/24
  */
 @Target(ElementType.FIELD)

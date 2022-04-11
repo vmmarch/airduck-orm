@@ -3,7 +3,7 @@ package com.airduck.exception;
 import com.airduck.commons.StringUtils;
 
 /**
- * @author airduck
+ * @author airduck-vincent
  * Create time 2022/3/29
  */
 public class RainbowException extends RuntimeException {

@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 /**
  * String工具类
  *
- * @author airduck
+ * @author airduck-vincent
  */
 public
 class StringUtils {

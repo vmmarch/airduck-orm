@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @author airduck
+ * @author airduck-vincent
  * Create time 2022/3/24
  */
 @Data
@@ -26,7 +26,7 @@ public class User extends AirduckStdEntity {
     private String password;
 
     @Comment("昵称")
-    @Column(requiredNotNull = true, defaultValue = "nickname:={username}")
+    @Column(requiredNotNull = true, defaultValue = "{username}")
     private String nickname;
 
     @Comment("邮箱")

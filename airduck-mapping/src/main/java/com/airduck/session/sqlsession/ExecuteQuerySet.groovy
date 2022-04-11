@@ -7,7 +7,7 @@ import com.alibaba.fastjson.JSONObject
 import java.sql.ResultSet
 
 /**
- * @author airduck
+ * @author airduck-vincent
  * Create time 2022/3/23
  */
 class ExecuteQuerySet {

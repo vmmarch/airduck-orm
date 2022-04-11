@@ -30,7 +30,7 @@ import java.util.LinkedHashSet;
 /**
  * 静态的Set工具类
  *
- * @author airduck
+ * @author airduck-vincent
  */
 public final class Sets
 {

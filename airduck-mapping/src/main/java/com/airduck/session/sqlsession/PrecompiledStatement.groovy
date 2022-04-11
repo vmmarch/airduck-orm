@@ -11,7 +11,7 @@ import java.sql.PreparedStatement
 /**
  * 预编译SQL声明
  *
- * @author airduck
+ * @author airduck-vincent
  * Create time 2022/3/23
  */
 class PrecompiledStatement {

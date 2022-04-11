@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author airduck
+ * @author airduck-vincent
  * Create time 2022/3/25
  */
 public class GetSQLSession {

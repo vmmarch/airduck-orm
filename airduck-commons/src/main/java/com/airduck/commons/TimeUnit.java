@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * 时间枚举
  *
- * @author airduck
+ * @author airduck-vincent
  * Create time 2022/3/30
  */
 public enum TimeUnit {

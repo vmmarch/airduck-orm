@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * 注解在类上和字段上
  *
- * @author airduck
+ * @author airduck-vincent
  * Create time 2022/3/24
  */
 @Target({ElementType.TYPE, ElementType.FIELD})

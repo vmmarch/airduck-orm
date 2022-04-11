@@ -34,7 +34,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 静态的Map工具类，注意如果在创建Map的时候要初始化
  * Map的大小，那么你设置的Map大小必须是2的幂。
  *
- * @author airduck
+ * @author airduck-vincent
  */
 public final class Maps {
 

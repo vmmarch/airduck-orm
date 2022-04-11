@@ -1,20 +1,24 @@
 package com.airduck.annotation;
 
-import com.airduck.session.airducksession.AirduckSession;
-
-import java.io.Serializable;
-
 /**
- * 自定义Id生成器
- *
- * @author airduck
- * Create time 2022/3/24
+ * @author airduck-vincent
+ * Create time 2022/4/11
  */
-public interface IdGenerator {
+public enum IdGenerator {
 
     /**
-     * @return 返回生成的Id
+     * 自增
      */
-    Serializable generateId(AirduckSession airduckSession);
+    INCREMENT,
+
+    /**
+     * 使用UUID算法生成
+     */
+    UUID,
+
+    /**
+     * 根据序列生成
+     */
+    SEQUENCE
 
 }

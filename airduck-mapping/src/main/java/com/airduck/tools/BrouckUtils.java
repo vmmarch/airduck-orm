@@ -7,7 +7,7 @@ import com.airduck.exception.RainbowException;
 /**
  * 针对于Horizon-ORM项目的工具类，并不适用于其他项目
  *
- * @author airduck
+ * @author airduck-vincent
  * Create time 2022/3/31
  */
 public class BrouckUtils {

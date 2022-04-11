@@ -5,7 +5,7 @@ import com.airduck.session.sqlsession.SqlSession;
 import java.util.List;
 
 /**
- * @author lts
+ * @author airduck-vincent
  * Create time 2022/4/7
  */
 public class AirduckSessionImplements implements AirduckSession {

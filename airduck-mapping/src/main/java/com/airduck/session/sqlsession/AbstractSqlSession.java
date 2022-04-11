@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.function.Function;
 
 /**
- * @author airduck
+ * @author airduck-vincent
  * Create time 2022/3/22
  */
 public class AbstractSqlSession implements SqlSession {

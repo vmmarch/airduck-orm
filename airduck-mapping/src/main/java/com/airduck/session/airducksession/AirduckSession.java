@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * SqlSession封装类，提供非常多便利快捷的数据库支持函数。
  *
- * @author lts
+ * @author airduck-vincent
  * Create time 2022/4/7
  */
 public interface AirduckSession extends SaveOperationFace, UpdateOperationFace, DeleteOperationFace {
