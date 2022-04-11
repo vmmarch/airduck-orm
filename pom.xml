@@ -10,7 +10,7 @@
     <version>1.2.3.UCK</version>
     <modules>
         <module>airduck-commons</module>
-        <module>airduck-mapping</module>
+        <module>airduck-jdbc</module>
     </modules>
 
     <properties>

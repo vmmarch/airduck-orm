@@ -10,7 +10,7 @@ import com.airduck.exception.AirduckException;
  * @author airduck-vincent
  * Create time 2022/3/31
  */
-public class BrouckUtils {
+public class AirduckUtils {
 
     /**
      * 检查对象是否合法
