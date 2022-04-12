@@ -1,8 +1,6 @@
 package com.airduck;
 
-import com.airduck.annotation.Column;
-import com.airduck.annotation.Comment;
-import com.airduck.annotation.Table;
+import com.airduck.annotation.*;
 import com.airduck.std.AirduckStdEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

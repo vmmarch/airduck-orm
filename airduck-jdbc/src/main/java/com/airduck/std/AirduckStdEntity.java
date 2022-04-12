@@ -18,7 +18,7 @@ public class AirduckStdEntity {
     @IdGeneratedValue(generator = IdGenerator.INCREMENT)
     @Comment("ID")
     @Column(requiredNotNull = true)
-    private Integer id;
+    private Long id;
 
     /**
      * 创建时间，当数据创建时会自动设置创建时间。并且创建时间不可修改。也无需手动设置。

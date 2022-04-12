@@ -1,6 +1,6 @@
 package com.airduck.session.airducksession;
 
-import com.airduck.exception.IllegalColumnException;
+import com.airduck.exception.IllegalException;
 import com.airduck.exception.NotSupportException;
 
 import java.util.Date;
@@ -46,7 +46,7 @@ public enum SupportBy {
         if (type == Date.class)
             return "datetime";
 
-        throw new IllegalColumnException("无效或不支持的字段类型，{}", type.getName());
+        throw new IllegalException("无效或不支持的字段类型，{}", type.getName());
     }
 
 }

@@ -8,7 +8,6 @@ import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 
 import java.lang.reflect.Field;
-import java.sql.PreparedStatement;
 
 /**
  * 字段属性
@@ -17,7 +16,7 @@ import java.sql.PreparedStatement;
  * Create time 2022/4/11
  */
 @Data
-public class ColumnProperties {
+public class ColumnAttributes {
 
     /**
      * java的驼峰命名
@@ -33,7 +32,7 @@ public class ColumnProperties {
      * Java字段类型
      */
     @JSONField(serialize = false)
-    private Field javField;
+    private Field javaField;
 
     /**
      * 数据库字段类型
@@ -71,6 +70,21 @@ public class ColumnProperties {
     private String comment;
 
     /**
+     * 所属表
+     */
+    private String table;
+
+    /**
+     * 通用SQL
+     */
+    private String commonSQL;
+
+    /**
+     * 字段更新语句
+     */
+    private String alterSQL;
+
+    /**
      * 检查字段是否符合要求
      */
     public static boolean checkColumnField(Field field) {
@@ -80,20 +94,24 @@ public class ColumnProperties {
     /**
      * 构造器
      */
-    private ColumnProperties(Field field) {
+    private ColumnAttributes(Field field, String table) {
+        this.table = table;
+
         // id解析
         if (field.isAnnotationPresent(Id.class)) {
             this.isPrimaryKey = true;
-            this.idGenerator = field.getAnnotation(IdGeneratedValue.class)
-                    .generator();
+            if (field.isAnnotationPresent(IdGeneratedValue.class)) {
+                this.idGenerator = field.getAnnotation(IdGeneratedValue.class)
+                        .generator();
+            }
         }
 
         // java字段类型
-        this.javField = field;
+        this.javaField = field;
         // 数据库字段类型
-        this.type = SupportBy.MYSQL.typeMap(javField.getType());
+        this.type = SupportBy.MYSQL.typeMap(javaField.getType());
         // java的驼峰命名
-        this.javaName = javField.getName();
+        this.javaName = javaField.getName();
         // 数据库的下划线名称
         this.underlineName = StringUtils.humpToUnderline(javaName);
 
@@ -108,14 +126,42 @@ public class ColumnProperties {
         if (column.length() == 0xffffffff) {
             this.length = 0;
             // 设置整型和字符型的默认长度
-            if (javField.getType().isAssignableFrom(Number.class)) {
+            if (javaField.getType().getSuperclass() == Number.class) {
                 this.length = 11;
-            } else if (javField.getType().isAssignableFrom(String.class)) {
+            } else if (javaField.getType() == String.class) {
                 this.length = 255;
             }
+        } else {
+            this.length = column.length();
         }
 
         this.requiredNotNull = column.requiredNotNull();
+
+        // 获取字段的备注
+        if (javaField.isAnnotationPresent(Comment.class)) {
+            this.comment = javaField.getAnnotation(Comment.class).value();
+        }
+
+        // 通用sql
+        this.buildCommonSQL();
+    }
+
+    /**
+     * 构建通用sql
+     */
+    private void buildCommonSQL() {
+        commonSQL = "`"+ underlineName + "` "
+                + type + /* 这里预留一个转义。如果类型是字符串或者整数需要设置长度 */"{} "
+                + (requiredNotNull ? "NOT NULL" : "")
+                + (defaultValue != null ? "DEFAULT " + defaultValue : "")
+                + (isPrimaryKey ? "PRIMARY KEY" : "")
+                + (comment != null ? " COMMENT '" + comment + "'" : "");
+
+        if (javaField.getType() == String.class || javaField.getType().getSuperclass() == Number.class) {
+            commonSQL = StringUtils.format(commonSQL, "(" + length + ")");
+        } else {
+            commonSQL = StringUtils.format(commonSQL, "");
+        }
     }
 
     /**
@@ -124,14 +170,17 @@ public class ColumnProperties {
      * @param field                java对象的成员反射类
      * @param isOverridePrimaryKey 是否覆盖AirduckStdEntity的主键
      */
-    public static ColumnProperties create(Field field, boolean isOverridePrimaryKey) {
+    public static ColumnAttributes create(String table, boolean isOverridePrimaryKey, Field field) {
+        if (!field.isAnnotationPresent(Column.class))
+            return null;
+
         if (field.isAnnotationPresent(Id.class)) {
             if (field.getDeclaringClass() == AirduckStdEntity.class && isOverridePrimaryKey) {
                 return null;
             }
         }
 
-        return new ColumnProperties(field);
+        return new ColumnAttributes(field, table);
     }
 
 }
