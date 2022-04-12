@@ -1,6 +1,7 @@
-package com.airduck.session.sqlsession
+package com.ariduck.session.sqlsession
 
 import com.airduck.exception.ConnectionOpenedException
+import com.airduck.session.sqlsession.AbstractSqlSession
 import com.airduck.tools.ActionUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

@@ -1,4 +1,4 @@
-package com.airduck.session.sqlsession
+package com.ariduck.session.sqlsession
 
 import com.airduck.exception.MultipleResultSetsException
 import com.alibaba.fastjson.JSONArray

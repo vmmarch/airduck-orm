@@ -1,8 +1,10 @@
 package com.airduck.session.airducksession;
 
+import com.airduck.session.airducksession.properties.EntityAttributes;
 import com.airduck.session.sqlsession.SqlSession;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author airduck-vincent
@@ -16,10 +18,20 @@ public class AirduckSessionImplements implements AirduckSession {
     private final SqlSession _session;
 
     /**
+     * 当前项目的所有实体属性
+     */
+    private Map<Class<?>, EntityAttributes> attributes;
+
+    /**
      * 初始化AirduckSessionImplements
      */
     public AirduckSessionImplements(SqlSession sqlSession) {
         this._session = sqlSession;
+    }
+
+    @Override
+    public EntityAttributes getAttributes(Class<?> _class) {
+        return attributes.get(_class);
     }
 
     @Override

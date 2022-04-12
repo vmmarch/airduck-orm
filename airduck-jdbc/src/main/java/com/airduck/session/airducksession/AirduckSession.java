@@ -1,5 +1,7 @@
 package com.airduck.session.airducksession;
 
+import com.airduck.session.airducksession.properties.EntityAttributes;
+
 import java.util.List;
 
 /**
@@ -8,7 +10,13 @@ import java.util.List;
  * @author airduck-vincent
  * Create time 2022/4/7
  */
-public interface AirduckSession extends SaveOperationFace, UpdateOperationFace, DeleteOperationFace {
+public interface AirduckSession extends SaveOperationFace,
+        UpdateOperationFace, DeleteOperationFace {
+
+    /**
+     * 实体属性对象
+     */
+    EntityAttributes getAttributes(Class<?> _class);
 
     /**
      * 单条数据查询

@@ -1,6 +1,8 @@
 package com.airduck.session.sqlsession;
 
 import com.airduck.exception.ConnectionOpenedException;
+import com.ariduck.session.sqlsession.ExecuteQuerySet;
+import com.ariduck.session.sqlsession.PrecompiledStatement;
 
 import java.sql.Connection;
 import java.sql.SQLException;

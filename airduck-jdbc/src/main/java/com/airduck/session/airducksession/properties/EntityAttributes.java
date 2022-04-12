@@ -6,12 +6,15 @@ import com.airduck.annotation.Table;
 import com.airduck.commons.Lists;
 import com.airduck.commons.ReflectionUtils;
 import com.airduck.exception.IllegalException;
+import com.airduck.session.airducksession.AirduckSession;
 import lombok.Data;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
 /**
+ * 实体属性类
+ *
  * @author airduck-vincent
  * Create time 2022/4/11
  */
@@ -29,6 +32,11 @@ public class EntityAttributes {
     private String comment;
 
     /**
+     * 用于操作数据库的会话对象
+     */
+    private AirduckSession airduckSession;
+
+    /**
      * 字段列表
      */
     private List<ColumnAttributes> columnAttributes;
@@ -38,6 +46,7 @@ public class EntityAttributes {
      */
     public EntityAttributes(Class<?> _class) {
         columnAttributes = Lists.newLinkedList();
+        // 解析实体类
         analyze(_class);
     }
 
@@ -64,7 +73,6 @@ public class EntityAttributes {
             if (columnAttributes != null)
                 this.columnAttributes.add(columnAttributes);
         }
-
     }
 
 }
